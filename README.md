@@ -13,7 +13,7 @@ Official client libraries for the [VoiceML REST API](https://voicetel.com/docs/a
 - [Pick your language](#-pick-your-language)
 - [Releases](#-releases)
 - [What every SDK gives you](#-what-every-sdk-gives-you)
-- [API documentation](#-api-documentation)
+- [API Documentation](#-api-documentation)
 - [Authentication, in 30 seconds](#-authentication-in-30-seconds)
 - [Resource groups](#-resource-groups)
 - [Twilio drop-in](#-twilio-drop-in)
@@ -74,7 +74,7 @@ Highlights since the v0.4.0 initial release:
 - **Recording audio fetch** — `recordings.get_audio(sid)` transparently follows the 302 → S3 presigned-URL redirect; you get the WAV bytes regardless of where they were served from.
 - **Zero codegen footprint** — every line is hand-written. No Swagger Codegen artifacts, no auto-generated method names like `accountsAccountSidCallsGet`.
 
-## 📖 API documentation
+## 📖 API Documentation
 
 - **Reference docs:** [voicetel.com/docs/api/v0.6/voiceml/](https://voicetel.com/docs/api/v0.6/voiceml/)
 - **Validator:** [voicetel.com/voiceml/validator/](https://voicetel.com/voiceml/validator/)
