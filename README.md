@@ -1,6 +1,6 @@
 # 🎙️ VoiceML SDKs
 
-Official client libraries for the [VoiceML REST API](https://voicetel.com/docs/api/v0.6/voiceml/) — VoiceTel's outbound voice + AMD service with a **Twilio-shaped wire format**. Eight languages, all hand-written, all targeting API **v0.6.4**, all MIT-licensed, all public.
+Official client libraries for the [VoiceML REST API](https://voicetel.com/docs/api/v0.6/voiceml/) — VoiceTel's outbound voice + AMD service with a **Twilio-compatible wire format**. Eight languages, all hand-written, all MIT-licensed, all public.
 
 ![API](https://img.shields.io/badge/API-v0.6.4-blue)
 ![Compatibility](https://img.shields.io/badge/Twilio--compatible-wire%20format-orange)
@@ -17,7 +17,7 @@ Official client libraries for the [VoiceML REST API](https://voicetel.com/docs/a
 - [Authentication, in 30 seconds](#-authentication-in-30-seconds)
 - [Resource groups](#-resource-groups)
 - [Twilio drop-in](#-twilio-drop-in)
-- [Versioning & spec parity](#-versioning--spec-parity)
+- [Versioning](#-versioning)
 - [Contributing](#-contributing)
 - [License](#-license)
 
@@ -29,7 +29,7 @@ These SDKs are written separately — they ship VoiceML-specific extensions (rea
 
 ## 🎯 Pick your language
 
-Each row links straight to the SDK repo. All eight cover the same **~60 operations across 7 resource groups** (Calls, Conferences, Queues, Applications, Recordings, IncomingPhoneNumbers, Diagnostics — plus the call-scoped sub-resources for Streams, SIPREC, Transcriptions, Notifications, Events, and User-Defined Messages).
+Each row links straight to the SDK repo. All eight cover the same **74 operations** across the resource groups listed in [voiceml-api-collections](https://github.com/voicetel/voiceml-api-collections).
 
 | Language | Repo | Install | Idiomatic style |
 |---|---|---|---|
@@ -44,9 +44,9 @@ Each row links straight to the SDK repo. All eight cover the same **~60 operatio
 
 ## 🏷️ Releases
 
-Latest tag on every SDK is **v0.6.4**. Full release history per language:
+Latest **released** tag on every SDK is **v0.6.4**. A **v0.6.6** sync is in progress locally (not yet tagged or pushed).
 
-| Language | Latest | All releases |
+| Language | Latest release | All releases |
 |---|---|---|
 | 🐍 Python | [v0.6.4](https://github.com/voicetel/voiceml-python-sdk/releases/tag/v0.6.4) | [history](https://github.com/voicetel/voiceml-python-sdk/releases) |
 | 🟦 TypeScript / Node | [v0.6.4](https://github.com/voicetel/voiceml-node-sdk/releases/tag/v0.6.4) | [history](https://github.com/voicetel/voiceml-node-sdk/releases) |
@@ -59,23 +59,24 @@ Latest tag on every SDK is **v0.6.4**. Full release history per language:
 
 Highlights since the v0.4.0 initial release:
 - **v0.5.0** — `.json` URL suffix on every path; `IncomingPhoneNumbers` resource + `Capabilities` sub-struct; `auth_token` / `authToken` constructor alias; `more_info` typed accessor on the error class.
-- **v0.6.0** — Twilio parity drift fixes: `IncomingPhoneNumber` full Twilio field set, `RecordingStatus` drops `failed`/adds `deleted`, `ConferenceStatus` adds `init`, `voice_method`/`voice_fallback_method` tightened to `[GET, POST]`.
+- **v0.6.0** — Twilio-compatibility fixes: `IncomingPhoneNumber` full Twilio field set, `RecordingStatus` drops `failed`/adds `deleted`, `ConferenceStatus` adds `init`, `voice_method`/`voice_fallback_method` tightened to `[GET, POST]`.
 - **v0.6.1** — spec tag-taxonomy sync (codegen metadata, no functional change).
-- **v0.6.2** — `Recording.media_url` (D5) + `IncomingPhoneNumber.type` (D6) — closes the last two Twilio-canonical-field gaps; tracked by `cmd/parity-lint` (three-way spec/SDK/Twilio gate).
+- **v0.6.2** — `Recording.media_url` (D5) + `IncomingPhoneNumber.type` (D6) — closes the last two Twilio-compatible field gaps; tracked by an internal three-way spec/SDK/Twilio compatibility check.
 - **v0.6.3** — Participant coaching fields (`coaching`, `call_sid_to_coach`, `queue_time`); `Recording.error_code`; Twilio-exact LIST filter params (`StartTime`/`EndTime`/`DateCreated` triples); queue `MaxSize=0` unlimited default; expanded enum coverage; `StartConferenceRecordingAPI` recording source.
 - **v0.6.4** — `PageToken` cursor pagination on all list endpoints.
+- **v0.6.6** *(in development, not yet released)* — `POST /Conferences/{sid}/Participants` (dial-in); account + call notification compat stubs; conference-scoped recording fetch/update/delete; typed IncomingPhoneNumber list/create (`Local`/`Mobile`/`TollFree`); accept-but-no-op list filters (`Log`, `MessageDate`, conference date filters, `IncludeSoftDeleted`).
 
 ## 🛠️ Tooling
 
 | Tool | Repo | Purpose |
 |---|---|---|
 | **CLI** | [voiceml-cli](https://github.com/voicetel/voiceml-cli) | Interactive REPL + `-x` one-shot commands against the VoiceML API |
-| **Collections** | [voiceml-api-collections](https://github.com/voicetel/voiceml-api-collections) | Postman v2.1 + Bruno collections for all 61 operations |
+| **Collections** | [voiceml-api-collections](https://github.com/voicetel/voiceml-api-collections) | Postman v2.1 + Bruno collections for all 74 operations |
 
 ## ✨ What every SDK gives you
 
 - **Strongly typed end-to-end** — every request body and response payload is a typed struct / class / record in the host language.
-- **Twilio-shape wire format** — the same `2010-04-01/Accounts/{AccountSid}/...` paths (with `.json` suffix), the same HTTP Basic auth, the same `{code, message, more_info, status}` error envelope. If you're migrating from `twilio-python` / `twilio-node` / etc., the constructor signature is the same (`auth_token` / `authToken` alias supported alongside `api_key` / `apiKey`).
+- **Twilio-compatible wire format** — the same `2010-04-01/Accounts/{AccountSid}/...` paths (with `.json` suffix), the same HTTP Basic auth, the same `{code, message, more_info, status}` error envelope. If you're migrating from `twilio-python` / `twilio-node` / etc., the constructor signature is the same (`auth_token` / `authToken` alias supported alongside `api_key` / `apiKey`).
 - **Auto-retry on 429 / 5xx** with `Retry-After` honored, exponential backoff capped at 8 s. Default `maxRetries = 2`.
 - **Structured errors** — every SDK exposes an `ApiError` (or equivalent) plus status-keyed subclasses: `AuthenticationError` (401), `NotFoundError` (404), `ConflictError` (409), `GoneError` (410), `RateLimitError` (429), `NotImplementedAPIError` (501), `ServerError` (5xx). The `.more_info` / `.MoreInfo` accessor surfaces Twilio's docs URL on every error. Catch broadly or pattern-match.
 - **Form-urlencoded by default**, JSON-body acceptance documented — matches Twilio's wire convention exactly.
@@ -221,11 +222,11 @@ Where VoiceML deliberately omits Twilio:
 
 Every SDK's README lists the per-language nuances.
 
-## 🔢 Versioning & spec parity
+## 🔢 Versioning
 
-- All SDKs target **VoiceML API v0.6.2** (the `2010-04-01` Twilio-shape namespace).
-- SDK package version tracks the API version: Python `0.6.2`, npm `0.6.2`, Java `0.6.2`, NuGet `0.6.2`, Composer `0.6.2`, Gem `0.6.2`, Swift `0.6.2`, Go module tagged `v0.6.2`.
-- The OpenAPI source of truth is published at [voicetel.com/docs/api/v0.6/voiceml/](https://voicetel.com/docs/api/v0.6/voiceml/). When the spec bumps, the SDKs get updated commits; each repo's release notes (GitHub Releases) record the change.
+- Latest **released** SDK version: **v0.6.4** (matches the OpenAPI spec tag on GitHub).
+- SDK package version tracks the API spec version in lockstep. **v0.6.6** sync is underway locally against `callbroadcast.yml` v0.6.6 — not yet committed, tagged, or pushed.
+- The OpenAPI source of truth is published at [voicetel.com/docs/api/v0.6/voiceml/](https://voicetel.com/docs/api/v0.6/voiceml/). When the spec bumps, update all repos listed in this catalogue; each repo's GitHub Releases record the change.
 
 ## 🤝 Contributing
 
