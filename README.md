@@ -44,18 +44,18 @@ Each row links straight to the SDK repo. All eight cover the same **81 operation
 
 ## 🏷️ Releases
 
-Latest **released** tag on every SDK is **v0.7.1**.
+Latest **released** tag is **v0.7.1** across the fleet, with a v0.7.1.1 test-pin fix on Go / Ruby / Swift (no functional change — those three SDKs ship the same surface, only the version literal differs).
 
 | Language | Latest release | All releases |
 |---|---|---|
 | 🐍 Python | [v0.7.1](https://github.com/voicetel/voiceml-python-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-python-sdk/releases) |
 | 🟦 TypeScript / Node | [v0.7.1](https://github.com/voicetel/voiceml-node-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-node-sdk/releases) |
-| 🐹 Go | [v0.7.1](https://github.com/voicetel/voiceml-go-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-go-sdk/releases) |
+| 🐹 Go | [v0.7.1.1](https://github.com/voicetel/voiceml-go-sdk/releases/tag/v0.7.1.1) | [history](https://github.com/voicetel/voiceml-go-sdk/releases) |
 | ☕ Java | [v0.7.1](https://github.com/voicetel/voiceml-java-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-java-sdk/releases) |
 | 🟪 C# / .NET | [v0.7.1](https://github.com/voicetel/voiceml-csharp-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-csharp-sdk/releases) |
 | 🐘 PHP | [v0.7.1](https://github.com/voicetel/voiceml-php-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-php-sdk/releases) |
-| 💎 Ruby | [v0.7.1](https://github.com/voicetel/voiceml-ruby-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-ruby-sdk/releases) |
-| 🦅 Swift | [v0.7.1](https://github.com/voicetel/voiceml-swift/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-swift/releases) |
+| 💎 Ruby | [v0.7.1.1](https://github.com/voicetel/voiceml-ruby-sdk/releases/tag/v0.7.1.1) | [history](https://github.com/voicetel/voiceml-ruby-sdk/releases) |
+| 🦅 Swift | [v0.7.1.1](https://github.com/voicetel/voiceml-swift/releases/tag/v0.7.1.1) | [history](https://github.com/voicetel/voiceml-swift/releases) |
 
 Highlights since the v0.4.0 initial release:
 - **v0.5.0** — `.json` URL suffix on every path; `IncomingPhoneNumbers` resource + `Capabilities` sub-struct; `auth_token` / `authToken` constructor alias; `more_info` typed accessor on the error class.
@@ -68,6 +68,7 @@ Highlights since the v0.4.0 initial release:
 - **v0.6.6.1** — TLS session-ticket caching (Go) and persistent connections (Ruby); typed status enums (Java/C#/PHP); pagination iterators on Conferences / Recordings / Queues across every SDK; vitest 4.x security bump for TypeScript.
 - **v0.7.0** — **SMS support** via the new `/Messages` resource (Twilio-compatible: send, fetch, list with To / From / DateSent filters, body redaction, delete) and the **`<Pay>` REST companion** at `POST /Calls/{sid}/Payments[/{sid}]` (start a Pay session on a live call, advance via `Capture=...`, terminate via `Status=complete|cancel`). Per-tenant Stripe BYO. Operation count: 74 → 81 across 8 resource families.
 - **v0.7.1** — Null bugfix. Fleet-wide README parity refresh — every SDK README now follows the same emoji-decorated structure (Features → Installation → Quickstart → Authentication → Resource Reference → Errors → Async / Pagination → Migration → Rate Limits → Dev → Docs → Contributors → Sponsors → License) with verified version, test count, and resource list per language. No functional changes.
+- **v0.7.1.1** — Test-pin fix on Go / Ruby / Swift only. v0.7.1 lifted the SDK Version constant from 0.7.0 → 0.7.1 across the fleet, but Go / Ruby / Swift carried version-pinned test assertions that still expected "0.7.0" and so failed CI. v0.7.1.1 brings the constant + the assertion to 0.7.1.1 in lockstep. No behavioural change — Go consumers, Ruby consumers, and Swift consumers should treat v0.7.1.1 as their v0.7.1.
 
 ## 🛠️ Tooling
 
