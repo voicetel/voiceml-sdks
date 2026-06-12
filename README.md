@@ -2,7 +2,7 @@
 
 Official client libraries for the [VoiceML REST API](https://voicetel.com/docs/api/v0.6/voiceml/) — VoiceTel's voice + SMS + AMD service with a **Twilio-compatible wire format**. Eight languages, all hand-written, all MIT-licensed, all public.
 
-![API](https://img.shields.io/badge/API-v0.7.0-blue)
+![API](https://img.shields.io/badge/API-v0.7.1-blue)
 ![Compatibility](https://img.shields.io/badge/Twilio--compatible-wire%20format-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![SDKs](https://img.shields.io/badge/SDKs-8-brightgreen)
@@ -36,7 +36,7 @@ Each row links straight to the SDK repo. All eight cover the same **81 operation
 | 🐍 **Python** | [voiceml-python-sdk](https://github.com/voicetel/voiceml-python-sdk) | `pip install voiceml` | `Client` + `AsyncClient`, Pydantic v2, httpx |
 | 🟦 **TypeScript / Node** | [voiceml-node-sdk](https://github.com/voicetel/voiceml-node-sdk) | `npm install voiceml` | ESM + CJS, async-only, `fetch`-based, zero runtime deps |
 | 🐹 **Go** | [voiceml-go-sdk](https://github.com/voicetel/voiceml-go-sdk) | `go get github.com/voicetel/voiceml-go-sdk` | `context.Context`, stdlib `net/http`, zero deps |
-| ☕ **Java** | [voiceml-java-sdk](https://github.com/voicetel/voiceml-java-sdk) | `com.voicetel:voiceml:0.7.0` | Java 11, `java.net.http`, Jackson, builders |
+| ☕ **Java** | [voiceml-java-sdk](https://github.com/voicetel/voiceml-java-sdk) | `com.voicetel:voiceml:0.7.1` | Java 11, `java.net.http`, Jackson, builders |
 | 🟪 **C# / .NET** | [voiceml-csharp-sdk](https://github.com/voicetel/voiceml-csharp-sdk) | `dotnet add package VoiceML` | net8.0, `async/await`, `System.Text.Json`, zero NuGet deps |
 | 🐘 **PHP** | [voiceml-php-sdk](https://github.com/voicetel/voiceml-php-sdk) | `composer require voicetel/voiceml` | PHP 8.1+, Guzzle 7, typed enums, PSR-4 |
 | 💎 **Ruby** | [voiceml-ruby-sdk](https://github.com/voicetel/voiceml-ruby-sdk) | `gem install voiceml` | Ruby 3.0+, stdlib `Net::HTTP`, kwargs, zero gem deps |
@@ -44,18 +44,18 @@ Each row links straight to the SDK repo. All eight cover the same **81 operation
 
 ## 🏷️ Releases
 
-Latest **released** tag on every SDK is **v0.7.0**.
+Latest **released** tag on every SDK is **v0.7.1**.
 
 | Language | Latest release | All releases |
 |---|---|---|
-| 🐍 Python | [v0.7.0](https://github.com/voicetel/voiceml-python-sdk/releases/tag/v0.7.0) | [history](https://github.com/voicetel/voiceml-python-sdk/releases) |
-| 🟦 TypeScript / Node | [v0.7.0](https://github.com/voicetel/voiceml-node-sdk/releases/tag/v0.7.0) | [history](https://github.com/voicetel/voiceml-node-sdk/releases) |
-| 🐹 Go | [v0.7.0](https://github.com/voicetel/voiceml-go-sdk/releases/tag/v0.7.0) | [history](https://github.com/voicetel/voiceml-go-sdk/releases) |
-| ☕ Java | [v0.7.0](https://github.com/voicetel/voiceml-java-sdk/releases/tag/v0.7.0) | [history](https://github.com/voicetel/voiceml-java-sdk/releases) |
-| 🟪 C# / .NET | [v0.7.0](https://github.com/voicetel/voiceml-csharp-sdk/releases/tag/v0.7.0) | [history](https://github.com/voicetel/voiceml-csharp-sdk/releases) |
-| 🐘 PHP | [v0.7.0](https://github.com/voicetel/voiceml-php-sdk/releases/tag/v0.7.0) | [history](https://github.com/voicetel/voiceml-php-sdk/releases) |
-| 💎 Ruby | [v0.7.0](https://github.com/voicetel/voiceml-ruby-sdk/releases/tag/v0.7.0) | [history](https://github.com/voicetel/voiceml-ruby-sdk/releases) |
-| 🦅 Swift | [v0.7.0](https://github.com/voicetel/voiceml-swift/releases/tag/v0.7.0) | [history](https://github.com/voicetel/voiceml-swift/releases) |
+| 🐍 Python | [v0.7.1](https://github.com/voicetel/voiceml-python-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-python-sdk/releases) |
+| 🟦 TypeScript / Node | [v0.7.1](https://github.com/voicetel/voiceml-node-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-node-sdk/releases) |
+| 🐹 Go | [v0.7.1](https://github.com/voicetel/voiceml-go-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-go-sdk/releases) |
+| ☕ Java | [v0.7.1](https://github.com/voicetel/voiceml-java-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-java-sdk/releases) |
+| 🟪 C# / .NET | [v0.7.1](https://github.com/voicetel/voiceml-csharp-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-csharp-sdk/releases) |
+| 🐘 PHP | [v0.7.1](https://github.com/voicetel/voiceml-php-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-php-sdk/releases) |
+| 💎 Ruby | [v0.7.1](https://github.com/voicetel/voiceml-ruby-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-ruby-sdk/releases) |
+| 🦅 Swift | [v0.7.1](https://github.com/voicetel/voiceml-swift/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-swift/releases) |
 
 Highlights since the v0.4.0 initial release:
 - **v0.5.0** — `.json` URL suffix on every path; `IncomingPhoneNumbers` resource + `Capabilities` sub-struct; `auth_token` / `authToken` constructor alias; `more_info` typed accessor on the error class.
@@ -67,6 +67,7 @@ Highlights since the v0.4.0 initial release:
 - **v0.6.6** — `POST /Conferences/{sid}/Participants` (dial-in); account + call notification compat stubs; conference-scoped recording fetch/update/delete; typed IncomingPhoneNumber list/create (`Local`/`Mobile`/`TollFree`); accept-but-no-op list filters (`Log`, `MessageDate`, conference date filters, `IncludeSoftDeleted`).
 - **v0.6.6.1** — TLS session-ticket caching (Go) and persistent connections (Ruby); typed status enums (Java/C#/PHP); pagination iterators on Conferences / Recordings / Queues across every SDK; vitest 4.x security bump for TypeScript.
 - **v0.7.0** — **SMS support** via the new `/Messages` resource (Twilio-compatible: send, fetch, list with To / From / DateSent filters, body redaction, delete) and the **`<Pay>` REST companion** at `POST /Calls/{sid}/Payments[/{sid}]` (start a Pay session on a live call, advance via `Capture=...`, terminate via `Status=complete|cancel`). Per-tenant Stripe BYO. Operation count: 74 → 81 across 8 resource families.
+- **v0.7.1** — Null bugfix. Fleet-wide README parity refresh — every SDK README now follows the same emoji-decorated structure (Features → Installation → Quickstart → Authentication → Resource Reference → Errors → Async / Pagination → Migration → Rate Limits → Dev → Docs → Contributors → Sponsors → License) with verified version, test count, and resource list per language. No functional changes.
 
 ## 🛠️ Tooling
 
@@ -227,7 +228,7 @@ Every SDK's README lists the per-language nuances.
 
 ## 🔢 Versioning
 
-- Latest **released** SDK version: **v0.7.0** (matches the OpenAPI spec tag on GitHub).
+- Latest **released** SDK version: **v0.7.1** (matches the OpenAPI spec tag on GitHub).
 - SDK package version tracks the API spec version in lockstep.
 - The OpenAPI source of truth is published at [voicetel.com/docs/api/v0.6/voiceml/](https://voicetel.com/docs/api/v0.6/voiceml/). When the spec bumps, update all repos listed in this catalogue; each repo's GitHub Releases record the change.
 
