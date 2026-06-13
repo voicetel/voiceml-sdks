@@ -1,6 +1,6 @@
 # 🎙️ VoiceML SDKs
 
-Official client libraries for the [VoiceML REST API](https://voicetel.com/docs/api/v0.6/voiceml/) — VoiceTel's voice + SMS + AMD service with a **Twilio-compatible wire format**. Eight languages, all hand-written, all MIT-licensed, all public.
+Official client libraries for the [VoiceML REST API](https://voicetel.com/docs/api/v0.7/voiceml/) — VoiceTel's voice + SMS + AMD service with a **Twilio-compatible wire format**. Eight languages, all hand-written, all MIT-licensed, all public.
 
 ![API](https://img.shields.io/badge/API-v0.7.1-blue)
 ![Compatibility](https://img.shields.io/badge/Twilio--compatible-wire%20format-orange)
@@ -34,7 +34,7 @@ Each row links straight to the SDK repo. All eight cover the same **81 operation
 | Language | Repo | Install | Idiomatic style |
 |---|---|---|---|
 | 🐍 **Python** | [voiceml-python-sdk](https://github.com/voicetel/voiceml-python-sdk) | `pip install voiceml` | `Client` + `AsyncClient`, Pydantic v2, httpx |
-| 🟦 **TypeScript / Node** | [voiceml-node-sdk](https://github.com/voicetel/voiceml-node-sdk) | `npm install voiceml` | ESM + CJS, async-only, `fetch`-based, zero runtime deps |
+| 🟦 **TypeScript / Node** | [voiceml-node-sdk](https://github.com/voicetel/voiceml-node-sdk) | `npm install @voicetel.com/voiceml` | ESM + CJS, async-only, `fetch`-based, zero runtime deps |
 | 🐹 **Go** | [voiceml-go-sdk](https://github.com/voicetel/voiceml-go-sdk) | `go get github.com/voicetel/voiceml-go-sdk` | `context.Context`, stdlib `net/http`, zero deps |
 | ☕ **Java** | [voiceml-java-sdk](https://github.com/voicetel/voiceml-java-sdk) | `com.voicetel:voiceml:0.7.1` | Java 11, `java.net.http`, Jackson, builders |
 | 🟪 **C# / .NET** | [voiceml-csharp-sdk](https://github.com/voicetel/voiceml-csharp-sdk) | `dotnet add package VoiceML` | net8.0, `async/await`, `System.Text.Json`, zero NuGet deps |
@@ -91,7 +91,7 @@ Highlights since the v0.4.0 initial release:
 
 ## 📖 API Documentation
 
-- **Reference docs:** [voicetel.com/docs/api/v0.6/voiceml/](https://voicetel.com/docs/api/v0.6/voiceml/)
+- **Reference docs:** [voicetel.com/docs/api/v0.7/voiceml/](https://voicetel.com/docs/api/v0.7/voiceml/)
 - **Validator:** [voicetel.com/voiceml/validator/](https://voicetel.com/voiceml/validator/)
 - **SDK catalogue:** [voicetel.com/docs/voiceml-sdks/](https://voicetel.com/docs/voiceml-sdks/)
 
@@ -231,7 +231,7 @@ Every SDK's README lists the per-language nuances.
 
 - Latest **released** SDK version: **v0.7.1** (matches the OpenAPI spec tag on GitHub).
 - SDK package version tracks the API spec version in lockstep.
-- The OpenAPI source of truth is published at [voicetel.com/docs/api/v0.6/voiceml/](https://voicetel.com/docs/api/v0.6/voiceml/). When the spec bumps, update all repos listed in this catalogue; each repo's GitHub Releases record the change.
+- The OpenAPI source of truth is published at [voicetel.com/docs/api/v0.7/voiceml/](https://voicetel.com/docs/api/v0.7/voiceml/). When the spec bumps, update all repos listed in this catalogue; each repo's GitHub Releases record the change.
 
 ## 🤝 Contributing
 
