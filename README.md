@@ -44,16 +44,16 @@ Each row links straight to the SDK repo. All eight cover the same **81 operation
 
 ## 🏷️ Releases
 
-Latest **released** tag is **v0.7.1** across the fleet, with a v0.7.1.1 test-pin fix on Go / Ruby / Swift (no functional change — those three SDKs ship the same surface, only the version literal differs).
+Latest **released** tag is **v0.7.1** across the fleet, with a v0.7.1.1 lockstep-fix on Python / PHP / Go / Ruby / Swift (no functional change — those five SDKs ship the same surface, only the runtime version literal differs). TypeScript / Java / C# stay at v0.7.1 — npm semver-2 forbids 4-segment versions, and the Java / C# publish pipelines are awaiting registry credentials.
 
 | Language | Latest release | All releases |
 |---|---|---|
-| 🐍 Python | [v0.7.1](https://github.com/voicetel/voiceml-python-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-python-sdk/releases) |
+| 🐍 Python | [v0.7.1.1](https://github.com/voicetel/voiceml-python-sdk/releases/tag/v0.7.1.1) | [history](https://github.com/voicetel/voiceml-python-sdk/releases) |
 | 🟦 TypeScript / Node | [v0.7.1](https://github.com/voicetel/voiceml-node-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-node-sdk/releases) |
 | 🐹 Go | [v0.7.1.1](https://github.com/voicetel/voiceml-go-sdk/releases/tag/v0.7.1.1) | [history](https://github.com/voicetel/voiceml-go-sdk/releases) |
 | ☕ Java | [v0.7.1](https://github.com/voicetel/voiceml-java-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-java-sdk/releases) |
 | 🟪 C# / .NET | [v0.7.1](https://github.com/voicetel/voiceml-csharp-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-csharp-sdk/releases) |
-| 🐘 PHP | [v0.7.1](https://github.com/voicetel/voiceml-php-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-php-sdk/releases) |
+| 🐘 PHP | [v0.7.1.1](https://github.com/voicetel/voiceml-php-sdk/releases/tag/v0.7.1.1) | [history](https://github.com/voicetel/voiceml-php-sdk/releases) |
 | 💎 Ruby | [v0.7.1.1](https://github.com/voicetel/voiceml-ruby-sdk/releases/tag/v0.7.1.1) | [history](https://github.com/voicetel/voiceml-ruby-sdk/releases) |
 | 🦅 Swift | [v0.7.1.1](https://github.com/voicetel/voiceml-swift/releases/tag/v0.7.1.1) | [history](https://github.com/voicetel/voiceml-swift/releases) |
 
@@ -68,7 +68,7 @@ Highlights since the v0.4.0 initial release:
 - **v0.6.6.1** — TLS session-ticket caching (Go) and persistent connections (Ruby); typed status enums (Java/C#/PHP); pagination iterators on Conferences / Recordings / Queues across every SDK; vitest 4.x security bump for TypeScript.
 - **v0.7.0** — **SMS support** via the new `/Messages` resource (Twilio-compatible: send, fetch, list with To / From / DateSent filters, body redaction, delete) and the **`<Pay>` REST companion** at `POST /Calls/{sid}/Payments[/{sid}]` (start a Pay session on a live call, advance via `Capture=...`, terminate via `Status=complete|cancel`). Per-tenant Stripe BYO. Operation count: 74 → 81 across 8 resource families.
 - **v0.7.1** — Null bugfix. Fleet-wide README parity refresh — every SDK README now follows the same emoji-decorated structure (Features → Installation → Quickstart → Authentication → Resource Reference → Errors → Async / Pagination → Migration → Rate Limits → Dev → Docs → Contributors → Sponsors → License) with verified version, test count, and resource list per language. No functional changes.
-- **v0.7.1.1** — Test-pin fix on Go / Ruby / Swift only. v0.7.1 lifted the SDK Version constant from 0.7.0 → 0.7.1 across the fleet, but Go / Ruby / Swift carried version-pinned test assertions that still expected "0.7.0" and so failed CI. v0.7.1.1 brings the constant + the assertion to 0.7.1.1 in lockstep. No behavioural change — Go consumers, Ruby consumers, and Swift consumers should treat v0.7.1.1 as their v0.7.1.
+- **v0.7.1.1** — Lockstep fix on Python / PHP / Go / Ruby / Swift. The v0.7.1 release left runtime `VERSION` constants at `0.7.0` in five SDKs (Python, TypeScript, Java, C#, PHP); the artifact metadata on each registry was `0.7.1`, but the SDK reported `0.7.0` from `__version__` / `Version::VERSION` / `Version.VERSION`. v0.7.1.1 brings the constant, package metadata, and smoke-test pin into lockstep at `0.7.1.1` on every SDK whose package registry accepts a 4-segment version. **Go / Ruby / Swift** (already at v0.7.1.1 from the prior round) and **Python / PHP** (added this round) ship the lockstep fix. **TypeScript** stays at v0.7.1 because npm semver-2 forbids 4-segment versions; **Java / C#** stay at v0.7.1 because Maven Central + NuGet publish pipelines are pending registry credentials. The runtime-constant fix is on `main` in all eight repos; only the customer-installable artifact differs. No behavioural change.
 
 ## 🛠️ Tooling
 
