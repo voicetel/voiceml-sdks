@@ -2,7 +2,7 @@
 
 Official client libraries for the [VoiceML REST API](https://voicetel.com/docs/api/v0.7/voiceml/) — VoiceTel's voice + SMS + AMD service with a **Twilio-compatible wire format**. Eight languages, all hand-written, all MIT-licensed, all public.
 
-![API](https://img.shields.io/badge/API-v0.7.1-blue)
+![API](https://img.shields.io/badge/API-v0.8.1-blue)
 ![Compatibility](https://img.shields.io/badge/Twilio--compatible-wire%20format-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![SDKs](https://img.shields.io/badge/SDKs-8-brightgreen)
@@ -29,14 +29,14 @@ These SDKs are written separately — they ship VoiceML-specific extensions (rea
 
 ## 🎯 Pick your language
 
-Each row links straight to the SDK repo. All eight cover the same **81 operations** across the resource groups listed in [voiceml-api-collections](https://github.com/voicetel/voiceml-api-collections).
+Each row links straight to the SDK repo. All eight cover the same **128 operations** across the resource groups listed in [voiceml-api-collections](https://github.com/voicetel/voiceml-api-collections).
 
 | Language | Repo | Install | Idiomatic style |
 |---|---|---|---|
 | 🐍 **Python** | [voiceml-python-sdk](https://github.com/voicetel/voiceml-python-sdk) | `pip install voiceml` | `Client` + `AsyncClient`, Pydantic v2, httpx |
 | 🟦 **TypeScript / Node** | [voiceml-node-sdk](https://github.com/voicetel/voiceml-node-sdk) | `npm install @voicetel.com/voiceml` | ESM + CJS, async-only, `fetch`-based, zero runtime deps |
 | 🐹 **Go** | [voiceml-go-sdk](https://github.com/voicetel/voiceml-go-sdk) | `go get github.com/voicetel/voiceml-go-sdk` | `context.Context`, stdlib `net/http`, zero deps |
-| ☕ **Java** | [voiceml-java-sdk](https://github.com/voicetel/voiceml-java-sdk) | `com.voicetel:voiceml:0.7.1` | Java 11, `java.net.http`, Jackson, builders |
+| ☕ **Java** | [voiceml-java-sdk](https://github.com/voicetel/voiceml-java-sdk) | `com.voicetel:voiceml:0.8.1` | Java 11, `java.net.http`, Jackson, builders |
 | 🟪 **C# / .NET** | [voiceml-csharp-sdk](https://github.com/voicetel/voiceml-csharp-sdk) | `dotnet add package VoiceML` | net8.0, `async/await`, `System.Text.Json`, zero NuGet deps |
 | 🐘 **PHP** | [voiceml-php-sdk](https://github.com/voicetel/voiceml-php-sdk) | `composer require voicetel/voiceml` | PHP 8.1+, Guzzle 7, typed enums, PSR-4 |
 | 💎 **Ruby** | [voiceml-ruby-sdk](https://github.com/voicetel/voiceml-ruby-sdk) | `gem install voiceml` | Ruby 3.0+, stdlib `Net::HTTP`, kwargs, zero gem deps |
@@ -44,18 +44,18 @@ Each row links straight to the SDK repo. All eight cover the same **81 operation
 
 ## 🏷️ Releases
 
-Latest **released** tag is **v0.7.1** across the fleet, with a v0.7.1.1 lockstep-fix on Python / PHP / Go / Ruby / Swift (no functional change — those five SDKs ship the same surface, only the runtime version literal differs). TypeScript / Java / C# stay at v0.7.1 — npm semver-2 forbids 4-segment versions, and the Java / C# publish pipelines are awaiting registry credentials.
+Latest **released** tag is **v0.8.1** across all 8 SDKs. v0.8.0 introduced the Twilio-compatible SIP Trunking surface (Domains, CredentialLists, IpAccessControlLists, Domain↔mapping bindings) and v0.8.1 adds Twilio's routes/v2 Inbound Processing Region API (`/v2/SipDomains/{name}`).
 
 | Language | Latest release | All releases |
 |---|---|---|
-| 🐍 Python | [v0.7.1.1](https://github.com/voicetel/voiceml-python-sdk/releases/tag/v0.7.1.1) | [history](https://github.com/voicetel/voiceml-python-sdk/releases) |
-| 🟦 TypeScript / Node | [v0.7.1](https://github.com/voicetel/voiceml-node-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-node-sdk/releases) |
-| 🐹 Go | [v0.7.1.1](https://github.com/voicetel/voiceml-go-sdk/releases/tag/v0.7.1.1) | [history](https://github.com/voicetel/voiceml-go-sdk/releases) |
-| ☕ Java | [v0.7.1](https://github.com/voicetel/voiceml-java-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-java-sdk/releases) |
-| 🟪 C# / .NET | [v0.7.1](https://github.com/voicetel/voiceml-csharp-sdk/releases/tag/v0.7.1) | [history](https://github.com/voicetel/voiceml-csharp-sdk/releases) |
-| 🐘 PHP | [v0.7.1.1](https://github.com/voicetel/voiceml-php-sdk/releases/tag/v0.7.1.1) | [history](https://github.com/voicetel/voiceml-php-sdk/releases) |
-| 💎 Ruby | [v0.7.1.1](https://github.com/voicetel/voiceml-ruby-sdk/releases/tag/v0.7.1.1) | [history](https://github.com/voicetel/voiceml-ruby-sdk/releases) |
-| 🦅 Swift | [v0.7.1.1](https://github.com/voicetel/voiceml-swift/releases/tag/v0.7.1.1) | [history](https://github.com/voicetel/voiceml-swift/releases) |
+| 🐍 Python | [v0.8.1](https://github.com/voicetel/voiceml-python-sdk/releases/tag/v0.8.1) | [history](https://github.com/voicetel/voiceml-python-sdk/releases) |
+| 🟦 TypeScript / Node | [v0.8.1](https://github.com/voicetel/voiceml-node-sdk/releases/tag/v0.8.1) | [history](https://github.com/voicetel/voiceml-node-sdk/releases) |
+| 🐹 Go | [v0.8.1](https://github.com/voicetel/voiceml-go-sdk/releases/tag/v0.8.1) | [history](https://github.com/voicetel/voiceml-go-sdk/releases) |
+| ☕ Java | [v0.8.1](https://github.com/voicetel/voiceml-java-sdk/releases/tag/v0.8.1) | [history](https://github.com/voicetel/voiceml-java-sdk/releases) |
+| 🟪 C# / .NET | [v0.8.1](https://github.com/voicetel/voiceml-csharp-sdk/releases/tag/v0.8.1) | [history](https://github.com/voicetel/voiceml-csharp-sdk/releases) |
+| 🐘 PHP | [v0.8.1](https://github.com/voicetel/voiceml-php-sdk/releases/tag/v0.8.1) | [history](https://github.com/voicetel/voiceml-php-sdk/releases) |
+| 💎 Ruby | [v0.8.1](https://github.com/voicetel/voiceml-ruby-sdk/releases/tag/v0.8.1) | [history](https://github.com/voicetel/voiceml-ruby-sdk/releases) |
+| 🦅 Swift | [v0.8.1](https://github.com/voicetel/voiceml-swift/releases/tag/v0.8.1) | [history](https://github.com/voicetel/voiceml-swift/releases) |
 
 Highlights since the v0.4.0 initial release:
 - **v0.5.0** — `.json` URL suffix on every path; `IncomingPhoneNumbers` resource + `Capabilities` sub-struct; `auth_token` / `authToken` constructor alias; `more_info` typed accessor on the error class.
@@ -68,14 +68,16 @@ Highlights since the v0.4.0 initial release:
 - **v0.6.6.1** — TLS session-ticket caching (Go) and persistent connections (Ruby); typed status enums (Java/C#/PHP); pagination iterators on Conferences / Recordings / Queues across every SDK; vitest 4.x security bump for TypeScript.
 - **v0.7.0** — **SMS support** via the new `/Messages` resource (Twilio-compatible: send, fetch, list with To / From / DateSent filters, body redaction, delete) and the **`<Pay>` REST companion** at `POST /Calls/{sid}/Payments[/{sid}]` (start a Pay session on a live call, advance via `Capture=...`, terminate via `Status=complete|cancel`). Per-tenant Stripe BYO. Operation count: 74 → 81 across 8 resource families.
 - **v0.7.1** — Null bugfix. Fleet-wide README parity refresh — every SDK README now follows the same emoji-decorated structure (Features → Installation → Quickstart → Authentication → Resource Reference → Errors → Async / Pagination → Migration → Rate Limits → Dev → Docs → Contributors → Sponsors → License) with verified version, test count, and resource list per language. No functional changes.
-- **v0.7.1.1** — Lockstep fix on Python / PHP / Go / Ruby / Swift. The v0.7.1 release left runtime `VERSION` constants at `0.7.0` in five SDKs (Python, TypeScript, Java, C#, PHP); the artifact metadata on each registry was `0.7.1`, but the SDK reported `0.7.0` from `__version__` / `Version::VERSION` / `Version.VERSION`. v0.7.1.1 brings the constant, package metadata, and smoke-test pin into lockstep at `0.7.1.1` on every SDK whose package registry accepts a 4-segment version. **Go / Ruby / Swift** (already at v0.7.1.1 from the prior round) and **Python / PHP** (added this round) ship the lockstep fix. **TypeScript** stays at v0.7.1 because npm semver-2 forbids 4-segment versions; **Java / C#** stay at v0.7.1 because Maven Central + NuGet publish pipelines are pending registry credentials. The runtime-constant fix is on `main` in all eight repos; only the customer-installable artifact differs. No behavioural change.
+- **v0.7.1.1** — Lockstep fix on Python / PHP / Go / Ruby / Swift. The v0.7.1 release left runtime `VERSION` constants at `0.7.0` in five SDKs; this round brings the constant, package metadata, and smoke-test pin into lockstep at `0.7.1.1` on every SDK whose registry accepts a 4-segment version. TypeScript / Java / C# stayed at v0.7.1 (npm semver-2 + missing publish credentials).
+- **v0.8.0** — **SIP Trunking** added: `/SIP/Domains` (CRUD), `/SIP/CredentialLists` + `/Credentials` (CRUD), `/SIP/IpAccessControlLists` + `/IpAddresses` (CRUD), and Domain↔ACL/CredentialList mappings under three namespaces (historical, `/Auth/Calls/`, `/Auth/Registrations/`). 45 new operations across 6 sub-resources; spec operation count 81 → 126. Python / TypeScript / Go / Java / PHP shipped at v0.8.0; C# / Ruby / Swift skipped straight to v0.8.1.
+- **v0.8.1** — **Routes V2 Inbound Processing Region API** added: `GET` / `POST /v2/SipDomains/{name}` for setting a SIP domain's voice region (Twilio's routes/v2 namespace, keyed by domain name with the account resolved from HTTP Basic auth). 2 new operations; spec operation count 126 → 128. Shipped uniformly across all 8 SDKs.
 
 ## 🛠️ Tooling
 
 | Tool | Repo | Purpose |
 |---|---|---|
 | **CLI** | [voiceml-cli](https://github.com/voicetel/voiceml-cli) | Interactive REPL + `-x` one-shot commands against the VoiceML API |
-| **Collections** | [voiceml-api-collections](https://github.com/voicetel/voiceml-api-collections) | Postman v2.1 + Bruno collections for all 81 operations |
+| **Collections** | [voiceml-api-collections](https://github.com/voicetel/voiceml-api-collections) | Postman v2.1 + Bruno collections for all 128 operations |
 
 ## ✨ What every SDK gives you
 
@@ -229,7 +231,7 @@ Every SDK's README lists the per-language nuances.
 
 ## 🔢 Versioning
 
-- Latest **released** SDK version: **v0.7.1** (matches the OpenAPI spec tag on GitHub).
+- Latest **released** SDK version: **v0.8.1** (matches the OpenAPI spec tag on GitHub).
 - SDK package version tracks the API spec version in lockstep.
 - The OpenAPI source of truth is published at [voicetel.com/docs/api/v0.7/voiceml/](https://voicetel.com/docs/api/v0.7/voiceml/). When the spec bumps, update all repos listed in this catalogue; each repo's GitHub Releases record the change.
 
