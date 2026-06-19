@@ -1,6 +1,6 @@
 # 🎙️ VoiceML SDKs
 
-Official client libraries for the [VoiceML REST API](https://voicetel.com/docs/api/v0.7/voiceml/) — VoiceTel's voice + SMS + AMD service with a **Twilio-compatible wire format**. Eight languages, all hand-written, all MIT-licensed, all public.
+Official client libraries for the [VoiceML REST API](https://voicetel.com/docs/api/v0.8/voiceml/) — VoiceTel's voice + SMS + AMD service with a **Twilio-compatible wire format**. Eight languages, all hand-written, all MIT-licensed, all public.
 
 ![API](https://img.shields.io/badge/API-v0.8.1-blue)
 ![Compatibility](https://img.shields.io/badge/Twilio--compatible-wire%20format-orange)
@@ -93,7 +93,7 @@ Highlights since the v0.4.0 initial release:
 
 ## 📖 API Documentation
 
-- **Reference docs:** [voicetel.com/docs/api/v0.7/voiceml/](https://voicetel.com/docs/api/v0.7/voiceml/)
+- **Reference docs:** [voicetel.com/docs/api/v0.8/voiceml/](https://voicetel.com/docs/api/v0.8/voiceml/)
 - **Validator:** [voicetel.com/voiceml/validator/](https://voicetel.com/voiceml/validator/)
 - **SDK catalogue:** [voicetel.com/docs/voiceml-sdks/](https://voicetel.com/docs/voiceml-sdks/)
 
@@ -233,7 +233,7 @@ Every SDK's README lists the per-language nuances.
 
 - Latest **released** SDK version: **v0.8.1** (matches the OpenAPI spec tag on GitHub).
 - SDK package version tracks the API spec version in lockstep.
-- The OpenAPI source of truth is published at [voicetel.com/docs/api/v0.7/voiceml/](https://voicetel.com/docs/api/v0.7/voiceml/). When the spec bumps, update all repos listed in this catalogue; each repo's GitHub Releases record the change.
+- The OpenAPI source of truth is published at [voicetel.com/docs/api/v0.8/voiceml/](https://voicetel.com/docs/api/v0.8/voiceml/). When the spec bumps, update all repos listed in this catalogue; each repo's GitHub Releases record the change.
 
 ## 🤝 Contributing
 
