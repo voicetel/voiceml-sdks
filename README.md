@@ -1,8 +1,8 @@
 # 🎙️ VoiceML SDKs
 
-Official client libraries for the [VoiceML REST API](https://voicetel.com/docs/api/v0.8/voiceml/) — VoiceTel's voice + SMS + AMD service with a **Twilio-compatible wire format**. Eight languages, all hand-written, all MIT-licensed, all public.
+Official client libraries for the [VoiceML REST API](https://voicetel.com/docs/api/v0.9/voiceml/) — VoiceTel's voice + SMS + AMD service with a **Twilio-compatible wire format**. Eight languages, all hand-written, all MIT-licensed, all public.
 
-![API](https://img.shields.io/badge/API-v0.9.1-blue)
+![API](https://img.shields.io/badge/API-v0.9.2-blue)
 ![Compatibility](https://img.shields.io/badge/Twilio--compatible-wire%20format-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![SDKs](https://img.shields.io/badge/SDKs-8-brightgreen)
@@ -36,7 +36,7 @@ Each row links straight to the SDK repo. All eight cover the same **128 operatio
 | 🐍 **Python** | [voiceml-python-sdk](https://github.com/voicetel/voiceml-python-sdk) | `pip install voiceml` | `Client` + `AsyncClient`, Pydantic v2, httpx |
 | 🟦 **TypeScript / Node** | [voiceml-node-sdk](https://github.com/voicetel/voiceml-node-sdk) | `npm install @voicetel.com/voiceml` | ESM + CJS, async-only, `fetch`-based, zero runtime deps |
 | 🐹 **Go** | [voiceml-go-sdk](https://github.com/voicetel/voiceml-go-sdk) | `go get github.com/voicetel/voiceml-go-sdk` | `context.Context`, stdlib `net/http`, zero deps |
-| ☕ **Java** | [voiceml-java-sdk](https://github.com/voicetel/voiceml-java-sdk) | `com.voicetel:voiceml:0.9.1` | Java 11, `java.net.http`, Jackson, builders |
+| ☕ **Java** | [voiceml-java-sdk](https://github.com/voicetel/voiceml-java-sdk) | `com.voicetel:voiceml:0.9.2` | Java 11, `java.net.http`, Jackson, builders |
 | 🟪 **C# / .NET** | [voiceml-csharp-sdk](https://github.com/voicetel/voiceml-csharp-sdk) | `dotnet add package VoiceML` | net8.0, `async/await`, `System.Text.Json`, zero NuGet deps |
 | 🐘 **PHP** | [voiceml-php-sdk](https://github.com/voicetel/voiceml-php-sdk) | `composer require voicetel/voiceml` | PHP 8.1+, Guzzle 7, typed enums, PSR-4 |
 | 💎 **Ruby** | [voiceml-ruby-sdk](https://github.com/voicetel/voiceml-ruby-sdk) | `gem install voiceml` | Ruby 3.0+, stdlib `Net::HTTP`, kwargs, zero gem deps |
@@ -44,7 +44,7 @@ Each row links straight to the SDK repo. All eight cover the same **128 operatio
 
 ## 🏷️ Releases
 
-Latest **released** tag is **v0.9.1** across all 8 SDKs. v0.9.1 brings the Twilio-compatible Conversations v1 surface (account-level + service-scoped mirror), Voice v1 (ByocTrunks / ConnectionPolicies / DialingPermissions Settings / SourceIpMappings / IpRecords), Routes V2 PhoneNumbers, and the first AI-assistants surface (Assistants v1: Assistant / Tool / Knowledge / Session / Message / Feedback / Policy — JSON request bodies, PUT for updates). Spec operation count rises from 128 (v0.8.1) to 307 (v0.9.1).
+Latest **released** tag is **v0.9.2** across all 8 SDKs. v0.9.2 adds the **Messaging Service** resource (`/v1/Services` on `messaging.voicetel.com`), the **Pricing** API (v1 & v2 — read-only Voice / Messaging / Phone Numbers / Trunking rate lookups), and **per-product host routing**: the Conversations product now answers on `conversations.voicetel.com` and Messaging Service on `messaging.voicetel.com`, derived automatically from the base URL, with per-product overrides for self-hosted deployments. Spec operation count rises from 307 (v0.9.1) to 321 (v0.9.2).
 
 | Language | Latest release | All releases |
 |---|---|---|
@@ -72,6 +72,7 @@ Highlights since the v0.4.0 initial release:
 - **v0.8.0** — **SIP Trunking** added: `/SIP/Domains` (CRUD), `/SIP/CredentialLists` + `/Credentials` (CRUD), `/SIP/IpAccessControlLists` + `/IpAddresses` (CRUD), and Domain↔ACL/CredentialList mappings under three namespaces (historical, `/Auth/Calls/`, `/Auth/Registrations/`). 45 new operations across 6 sub-resources; spec operation count 81 → 126. Python / TypeScript / Go / Java / PHP shipped at v0.8.0; C# / Ruby / Swift skipped straight to v0.8.1.
 - **v0.8.1** — **Routes V2 Inbound Processing Region API** added: `GET` / `POST /v2/SipDomains/{name}` for setting a SIP domain's voice region (Twilio's routes/v2 namespace, keyed by domain name with the account resolved from HTTP Basic auth). 2 new operations; spec operation count 126 → 128. Shipped uniformly across all 8 SDKs.
 - **v0.9.1** — **Conversations v1**, **Voice v1**, **Routes V2 PhoneNumbers**, and **Assistants v1** added in a single cut (no v0.9.0 release — spec rotated through phase work before tag). Conversations v1: 15 account-level resource families (Conversation, Message, Participant, Receipt, ScopedWebhook, Role, User, Credential, Configuration + Webhook + Address, ParticipantConversation, ConversationWithParticipants, UserConversation, Service) + 14-family service-scoped mirror under `/v1/Services/{ChatServiceSid}/*`. Voice v1: ByocTrunks, ConnectionPolicies + Targets, DialingPermissions Settings, SourceIpMappings, IpRecords. Routes V2: PhoneNumber Inbound Processing Region at `/v2/PhoneNumbers/{PhoneNumber}`. Assistants v1: Assistant / Tool / Knowledge (+ Status / Chunks) / Session / Message (send) / Feedback / Policy — first JSON-bodied resource family in the fleet (uses `PUT` for updates, distinct from the form-urlencoded `POST`-on-update pattern of every prior resource). Spec operation count 128 → 307 (+179 ops). Shipped uniformly across all 8 SDKs. Per-SDK conformance harness (`VOICEML_CONFORMANCE_FIXTURES`) brought green in the same cut: extended dispatch to all 199 fixtures and relaxed several pre-existing over-strict model fields to match Twilio's actual response shapes.
+- **v0.9.2** — **Messaging Service**, **Pricing v1/v2**, and **per-product host routing**. Messaging Service (`MG…`): create / list / fetch / update / delete under `/v1/Services`, riding `messaging.voicetel.com`. Pricing: 13 read-only operations — `/v1` Voice / Messaging / PhoneNumbers and `/v2` Voice / Trunking Countries + Numbers rate lookups. Per-product host routing: Conversation Service and Messaging Service share the `/v1/Services` path shape, so the whole Conversations product moved to `conversations.voicetel.com` and Messaging Service to `messaging.voicetel.com` — hosts are derived from the base URL automatically, with `messaging_base_url` / `conversations_base_url` (per-language naming) overrides for custom hosts. Spec operation count 307 → 321 (+14 ops). Shipped uniformly across all 8 SDKs; released alongside integrated dependency/security updates.
 
 ## 🛠️ Tooling
 
@@ -94,7 +95,7 @@ Highlights since the v0.4.0 initial release:
 
 ## 📖 API Documentation
 
-- **Reference docs:** [voicetel.com/docs/api/v0.8/voiceml/](https://voicetel.com/docs/api/v0.8/voiceml/)
+- **Reference docs:** [voicetel.com/docs/api/v0.9/voiceml/](https://voicetel.com/docs/api/v0.9/voiceml/)
 - **Validator:** [voicetel.com/voiceml/validator/](https://voicetel.com/voiceml/validator/)
 - **SDK catalogue:** [voicetel.com/docs/voiceml-sdks/](https://voicetel.com/docs/voiceml-sdks/)
 
@@ -232,9 +233,9 @@ Every SDK's README lists the per-language nuances.
 
 ## 🔢 Versioning
 
-- Latest **released** SDK version: **v0.9.1** (matches the OpenAPI spec tag on GitHub).
+- Latest **released** SDK version: **v0.9.2** (matches the OpenAPI spec tag on GitHub).
 - SDK package version tracks the API spec version in lockstep.
-- The OpenAPI source of truth is published at [voicetel.com/docs/api/v0.8/voiceml/](https://voicetel.com/docs/api/v0.8/voiceml/). When the spec bumps, update all repos listed in this catalogue; each repo's GitHub Releases record the change.
+- The OpenAPI source of truth is published at [voicetel.com/docs/api/v0.9/voiceml/](https://voicetel.com/docs/api/v0.9/voiceml/). When the spec bumps, update all repos listed in this catalogue; each repo's GitHub Releases record the change.
 
 ## 🤝 Contributing
 
