@@ -48,14 +48,14 @@ Latest **released** tag is **v0.9.2** across all 8 SDKs. v0.9.2 adds the **Messa
 
 | Language | Latest release | All releases |
 |---|---|---|
-| 🐍 Python | [v0.9.1](https://github.com/voicetel/voiceml-python-sdk/releases/tag/v0.9.1) | [history](https://github.com/voicetel/voiceml-python-sdk/releases) |
-| 🟦 TypeScript / Node | [v0.9.1](https://github.com/voicetel/voiceml-node-sdk/releases/tag/v0.9.1) | [history](https://github.com/voicetel/voiceml-node-sdk/releases) |
-| 🐹 Go | [v0.9.1](https://github.com/voicetel/voiceml-go-sdk/releases/tag/v0.9.1) | [history](https://github.com/voicetel/voiceml-go-sdk/releases) |
-| ☕ Java | [v0.9.1](https://github.com/voicetel/voiceml-java-sdk/releases/tag/v0.9.1) | [history](https://github.com/voicetel/voiceml-java-sdk/releases) |
-| 🟪 C# / .NET | [v0.9.1](https://github.com/voicetel/voiceml-csharp-sdk/releases/tag/v0.9.1) | [history](https://github.com/voicetel/voiceml-csharp-sdk/releases) |
-| 🐘 PHP | [v0.9.1](https://github.com/voicetel/voiceml-php-sdk/releases/tag/v0.9.1) | [history](https://github.com/voicetel/voiceml-php-sdk/releases) |
-| 💎 Ruby | [v0.9.1](https://github.com/voicetel/voiceml-ruby-sdk/releases/tag/v0.9.1) | [history](https://github.com/voicetel/voiceml-ruby-sdk/releases) |
-| 🦅 Swift | [v0.9.1](https://github.com/voicetel/voiceml-swift/releases/tag/v0.9.1) | [history](https://github.com/voicetel/voiceml-swift/releases) |
+| 🐍 Python | [v0.9.2](https://github.com/voicetel/voiceml-python-sdk/releases/tag/v0.9.2) | [history](https://github.com/voicetel/voiceml-python-sdk/releases) |
+| 🟦 TypeScript / Node | [v0.9.2](https://github.com/voicetel/voiceml-node-sdk/releases/tag/v0.9.2) | [history](https://github.com/voicetel/voiceml-node-sdk/releases) |
+| 🐹 Go | [v0.9.2](https://github.com/voicetel/voiceml-go-sdk/releases/tag/v0.9.2) | [history](https://github.com/voicetel/voiceml-go-sdk/releases) |
+| ☕ Java | [v0.9.2](https://github.com/voicetel/voiceml-java-sdk/releases/tag/v0.9.2) | [history](https://github.com/voicetel/voiceml-java-sdk/releases) |
+| 🟪 C# / .NET | [v0.9.2](https://github.com/voicetel/voiceml-csharp-sdk/releases/tag/v0.9.2) | [history](https://github.com/voicetel/voiceml-csharp-sdk/releases) |
+| 🐘 PHP | [v0.9.2](https://github.com/voicetel/voiceml-php-sdk/releases/tag/v0.9.2) | [history](https://github.com/voicetel/voiceml-php-sdk/releases) |
+| 💎 Ruby | [v0.9.2](https://github.com/voicetel/voiceml-ruby-sdk/releases/tag/v0.9.2) | [history](https://github.com/voicetel/voiceml-ruby-sdk/releases) |
+| 🦅 Swift | [v0.9.2](https://github.com/voicetel/voiceml-swift/releases/tag/v0.9.2) | [history](https://github.com/voicetel/voiceml-swift/releases) |
 
 Highlights since the v0.4.0 initial release:
 - **v0.5.0** — `.json` URL suffix on every path; `IncomingPhoneNumbers` resource + `Capabilities` sub-struct; `auth_token` / `authToken` constructor alias; `more_info` typed accessor on the error class.
