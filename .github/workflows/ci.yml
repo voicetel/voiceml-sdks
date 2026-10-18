@@ -5,6 +5,12 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  schedule:
+    - cron: '17 8 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   links:
@@ -13,5 +19,34 @@ jobs:
       - uses: actions/checkout@v7
       - uses: lycheeverse/lychee-action@v2
         with:
-          args: --no-progress --max-concurrency 5 README.md
+          args: --no-progress --max-concurrency 5 README.md CHANGELOG.md SECURITY.md
           fail: true
+
+  examples:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-go@v6
+        with:
+          go-version: stable
+          cache: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Compile Go and TypeScript quickstarts without calling the API
+        run: python3 scripts/check_examples.py --scratch "$RUNNER_TEMP/catalogue-examples"
+
+  registries:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Verify advertised registry and release metadata
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/check_registries.py

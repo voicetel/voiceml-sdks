@@ -1,6 +1,6 @@
 # 🎙️ VoiceML SDKs
 
-Official client libraries for the [VoiceML REST API](https://voicetel.com/docs/api/v0.9/voiceml/) — VoiceTel's voice + SMS + AMD service with a **Twilio-compatible wire format**. Eight languages, all hand-written, all MIT-licensed, all public.
+Official client libraries for the [VoiceML REST API](https://voicetel.com/docs/api/v0.9/voiceml/) — VoiceTel's Twilio-compatible voice, messaging and answering-machine-detection service. Eight hand-written SDKs in public repositories; see [License](#-license) for their individual terms.
 
 ![API](https://img.shields.io/badge/API-v0.9.2-blue)
 ![Compatibility](https://img.shields.io/badge/Twilio--compatible-wire%20format-orange)
@@ -12,39 +12,60 @@ Official client libraries for the [VoiceML REST API](https://voicetel.com/docs/a
 - [Why VoiceML](#-why-voiceml)
 - [Pick your language](#-pick-your-language)
 - [Releases](#-releases)
+- [Tooling](#-tooling)
 - [What every SDK gives you](#-what-every-sdk-gives-you)
 - [API Documentation](#-api-documentation)
 - [Authentication, in 30 seconds](#-authentication-in-30-seconds)
 - [Resource groups](#-resource-groups)
-- [Twilio drop-in](#-twilio-drop-in)
+- [Twilio-compatible migration](#-twilio-compatible-migration)
 - [Versioning](#-versioning)
 - [Contributing](#-contributing)
 - [License](#-license)
 
 ## 💡 Why VoiceML
 
-VoiceML is VoiceTel's voice + SMS + AMD (answering-machine detection) service. The REST surface is **wire-compatible with Twilio's Programmable Voice and Messages APIs** (the `2010-04-01` namespace): the same path layout (including the canonical `.json` suffix), the same auth model, the same error codes, the same pagination envelope. Existing Twilio SDKs can point at `https://voiceml.voicetel.com` and work as drop-in replacements.
+VoiceML provides a **Twilio-compatible API** for voice and messaging, including account-scoped resources in the `2010-04-01` namespace. Migration uses VoiceML-issued credentials and the VoiceML endpoint; resource coverage and method names are documented in each SDK. Twilio-issued credentials do not authenticate with VoiceML.
 
-These SDKs are written separately — they ship VoiceML-specific extensions (real-time transcription engines, per-call SIPREC and `MZ`-prefixed audio forks, `Conference.member_count`, REST-side `<Pay>` session control), don't carry Twilio's full surface (no Studio / Flex / Verify), and give you native error types in each language. Pick your language, install, and you're done.
+These SDKs include VoiceML extensions such as live transcription, per-call SIPREC, `MZ`-prefixed audio forks, `Conference.member_count`, and REST-side `<Pay>` session control, with native models and error types in each language.
 
 ## 🎯 Pick your language
 
-Each row links straight to the SDK repo. All eight cover the same **128 operations** across the resource groups listed in [voiceml-api-collections](https://github.com/voicetel/voiceml-api-collections).
+Each row links to the official SDK source. Install commands select published packages except for C#, whose source/local-feed installation is described below. Coverage evolves with the OpenAPI document; use each repository's release notes and spec-contract results for the exact source snapshot it supports.
 
 | Language | Repo | Install | Idiomatic style |
 |---|---|---|---|
 | 🐍 **Python** | [voiceml-python-sdk](https://github.com/voicetel/voiceml-python-sdk) | `pip install voiceml` | `Client` + `AsyncClient`, Pydantic v2, httpx |
-| 🟦 **TypeScript / Node** | [voiceml-node-sdk](https://github.com/voicetel/voiceml-node-sdk) | `npm install @voicetel.com/voiceml` | ESM + CJS, async-only, `fetch`-based, zero runtime deps |
+| 🟦 **TypeScript / Node** | [voiceml-node-sdk](https://github.com/voicetel/voiceml-node-sdk) | `npm install @voicetel.com/voiceml` | ESM, async-only, `fetch`-based, zero runtime deps; CommonJS packaging fix pending release |
 | 🐹 **Go** | [voiceml-go-sdk](https://github.com/voicetel/voiceml-go-sdk) | `go get github.com/voicetel/voiceml-go-sdk` | `context.Context`, stdlib `net/http`, zero deps |
 | ☕ **Java** | [voiceml-java-sdk](https://github.com/voicetel/voiceml-java-sdk) | `com.voicetel:voiceml:0.9.2` | Java 11, `java.net.http`, Jackson, builders |
-| 🟪 **C# / .NET** | [voiceml-csharp-sdk](https://github.com/voicetel/voiceml-csharp-sdk) | `dotnet add package VoiceML` | net8.0, `async/await`, `System.Text.Json`, zero NuGet deps |
+| 🟪 **C# / .NET** | [voiceml-csharp-sdk](https://github.com/voicetel/voiceml-csharp-sdk) | NuGet publication pending — [build from source / local feed](#c-installation-from-source) | .NET 8+, `async/await`, `System.Text.Json`, no runtime package dependencies |
 | 🐘 **PHP** | [voiceml-php-sdk](https://github.com/voicetel/voiceml-php-sdk) | `composer require voicetel/voiceml` | PHP 8.1+, Guzzle 7, typed enums, PSR-4 |
-| 💎 **Ruby** | [voiceml-ruby-sdk](https://github.com/voicetel/voiceml-ruby-sdk) | `gem install voiceml` | Ruby 3.0+, stdlib `Net::HTTP`, kwargs, zero gem deps |
+| 💎 **Ruby** | [voiceml-ruby-sdk](https://github.com/voicetel/voiceml-ruby-sdk) | `gem install voiceml` | Ruby 3.1+, stdlib `Net::HTTP`, kwargs, zero gem deps |
 | 🦅 **Swift** | [voiceml-swift](https://github.com/voicetel/voiceml-swift) | SwiftPM: `https://github.com/voicetel/voiceml-swift` | Swift 5.9, `async throws`, `URLSession`, iOS/macOS/tvOS/watchOS/Linux |
+
+### C# installation from source
+
+As checked on **2026-10-17**, `VoiceML` is **not published on nuget.org**. A GitHub Release is not proof of a NuGet publication. Build a package from the [official source](https://github.com/voicetel/voiceml-csharp-sdk) and select its local feed explicitly. With the .NET 10 SDK, run from a directory where you want the checkout, feed and application:
+
+```sh
+git clone https://github.com/voicetel/voiceml-csharp-sdk.git
+dotnet pack voiceml-csharp-sdk/src/VoiceML/VoiceML.csproj -c Release -o "$PWD/voiceml-local-feed"
+dotnet new console -n MyVoiceApp -f net8.0
+dotnet add MyVoiceApp/MyVoiceApp.csproj package VoiceML --version 0.9.2 --source "$PWD/voiceml-local-feed"
+dotnet build MyVoiceApp/MyVoiceApp.csproj -c Release
+```
+
+Alternatively, use a source project reference after cloning:
+
+```sh
+dotnet new console -n MyVoiceApp -f net8.0
+dotnet add MyVoiceApp/MyVoiceApp.csproj reference voiceml-csharp-sdk/src/VoiceML/VoiceML.csproj
+dotnet build MyVoiceApp/MyVoiceApp.csproj -c Release
+```
 
 ## 🏷️ Releases
 
-Latest **released** tag is **v0.9.2** across all 8 SDKs. v0.9.2 adds the **Messaging Service** resource (`/v1/Services` on `messaging.voicetel.com`), the **Pricing** API (v1 & v2 — read-only Voice / Messaging / Phone Numbers / Trunking rate lookups), and **per-product host routing**: the Conversations product now answers on `conversations.voicetel.com` and Messaging Service on `messaging.voicetel.com`, derived automatically from the base URL, with per-product overrides for self-hosted deployments. Spec operation count rises from 307 (v0.9.1) to 321 (v0.9.2).
+Release status checked **2026-10-17**: all eight SDK repositories have a **v0.9.2 GitHub Release**. Registry availability is separate: C# still requires the source/local-feed path above. This catalogue's own latest GitHub Release is [v0.9.1](https://github.com/voicetel/voiceml-sdks/releases/tag/v0.9.1); the SDK release table does not imply a v0.9.2 catalogue release.
 
 | Language | Latest release | All releases |
 |---|---|---|
@@ -57,86 +78,96 @@ Latest **released** tag is **v0.9.2** across all 8 SDKs. v0.9.2 adds the **Messa
 | 💎 Ruby | [v0.9.2](https://github.com/voicetel/voiceml-ruby-sdk/releases/tag/v0.9.2) | [history](https://github.com/voicetel/voiceml-ruby-sdk/releases) |
 | 🦅 Swift | [v0.9.2](https://github.com/voicetel/voiceml-swift/releases/tag/v0.9.2) | [history](https://github.com/voicetel/voiceml-swift/releases) |
 
-Highlights since the v0.4.0 initial release:
-- **v0.5.0** — `.json` URL suffix on every path; `IncomingPhoneNumbers` resource + `Capabilities` sub-struct; `auth_token` / `authToken` constructor alias; `more_info` typed accessor on the error class.
-- **v0.6.0** — Twilio-compatibility fixes: `IncomingPhoneNumber` full Twilio field set, `RecordingStatus` drops `failed`/adds `deleted`, `ConferenceStatus` adds `init`, `voice_method`/`voice_fallback_method` tightened to `[GET, POST]`.
-- **v0.6.1** — spec tag-taxonomy sync (codegen metadata, no functional change).
-- **v0.6.2** — `Recording.media_url` (D5) + `IncomingPhoneNumber.type` (D6) — closes the last two Twilio-compatible field gaps.
-- **v0.6.3** — Participant coaching fields (`coaching`, `call_sid_to_coach`, `queue_time`); `Recording.error_code`; Twilio-exact LIST filter params (`StartTime`/`EndTime`/`DateCreated` triples); queue `MaxSize=0` unlimited default; expanded enum coverage; `StartConferenceRecordingAPI` recording source.
-- **v0.6.4** — `PageToken` cursor pagination on all list endpoints.
-- **v0.6.6** — `POST /Conferences/{sid}/Participants` (dial-in); account + call notification compat stubs; conference-scoped recording fetch/update/delete; typed IncomingPhoneNumber list/create (`Local`/`Mobile`/`TollFree`); accept-but-no-op list filters (`Log`, `MessageDate`, conference date filters, `IncludeSoftDeleted`).
-- **v0.6.6.1** — TLS session-ticket caching (Go) and persistent connections (Ruby); typed status enums (Java/C#/PHP); pagination iterators on Conferences / Recordings / Queues across every SDK; vitest 4.x security bump for TypeScript.
-- **v0.7.0** — **SMS support** via the new `/Messages` resource (Twilio-compatible: send, fetch, list with To / From / DateSent filters, body redaction, delete) and the **`<Pay>` REST companion** at `POST /Calls/{sid}/Payments[/{sid}]` (start a Pay session on a live call, advance via `Capture=...`, terminate via `Status=complete|cancel`). Per-tenant Stripe BYO. Operation count: 74 → 81 across 8 resource families.
-- **v0.7.1** — Null bugfix. Fleet-wide README parity refresh — every SDK README now follows the same emoji-decorated structure (Features → Installation → Quickstart → Authentication → Resource Reference → Errors → Async / Pagination → Migration → Rate Limits → Dev → Docs → Contributors → Sponsors → License) with verified version, test count, and resource list per language. No functional changes.
-- **v0.7.1.1** — Lockstep fix on Python / PHP / Go / Ruby / Swift. The v0.7.1 release left runtime `VERSION` constants at `0.7.0` in five SDKs; this round brings the constant, package metadata, and smoke-test pin into lockstep at `0.7.1.1` on every SDK whose registry accepts a 4-segment version. TypeScript / Java / C# stayed at v0.7.1 (npm semver-2 + missing publish credentials).
-- **v0.8.0** — **SIP Trunking** added: `/SIP/Domains` (CRUD), `/SIP/CredentialLists` + `/Credentials` (CRUD), `/SIP/IpAccessControlLists` + `/IpAddresses` (CRUD), and Domain↔ACL/CredentialList mappings under three namespaces (historical, `/Auth/Calls/`, `/Auth/Registrations/`). 45 new operations across 6 sub-resources; spec operation count 81 → 126. Python / TypeScript / Go / Java / PHP shipped at v0.8.0; C# / Ruby / Swift skipped straight to v0.8.1.
-- **v0.8.1** — **Routes V2 Inbound Processing Region API** added: `GET` / `POST /v2/SipDomains/{name}` for setting a SIP domain's voice region (Twilio's routes/v2 namespace, keyed by domain name with the account resolved from HTTP Basic auth). 2 new operations; spec operation count 126 → 128. Shipped uniformly across all 8 SDKs.
-- **v0.9.1** — **Conversations v1**, **Voice v1**, **Routes V2 PhoneNumbers**, and **Assistants v1** added in a single cut (no v0.9.0 release — spec rotated through phase work before tag). Conversations v1: 15 account-level resource families (Conversation, Message, Participant, Receipt, ScopedWebhook, Role, User, Credential, Configuration + Webhook + Address, ParticipantConversation, ConversationWithParticipants, UserConversation, Service) + 14-family service-scoped mirror under `/v1/Services/{ChatServiceSid}/*`. Voice v1: ByocTrunks, ConnectionPolicies + Targets, DialingPermissions Settings, SourceIpMappings, IpRecords. Routes V2: PhoneNumber Inbound Processing Region at `/v2/PhoneNumbers/{PhoneNumber}`. Assistants v1: Assistant / Tool / Knowledge (+ Status / Chunks) / Session / Message (send) / Feedback / Policy — first JSON-bodied resource family in the fleet (uses `PUT` for updates, distinct from the form-urlencoded `POST`-on-update pattern of every prior resource). Spec operation count 128 → 307 (+179 ops). Shipped uniformly across all 8 SDKs. Per-SDK conformance harness (`VOICEML_CONFORMANCE_FIXTURES`) brought green in the same cut: extended dispatch to all 199 fixtures and relaxed several pre-existing over-strict model fields to match Twilio's actual response shapes.
-- **v0.9.2** — **Messaging Service**, **Pricing v1/v2**, and **per-product host routing**. Messaging Service (`MG…`): create / list / fetch / update / delete under `/v1/Services`, riding `messaging.voicetel.com`. Pricing: 13 read-only operations — `/v1` Voice / Messaging / PhoneNumbers and `/v2` Voice / Trunking Countries + Numbers rate lookups. Per-product host routing: Conversation Service and Messaging Service share the `/v1/Services` path shape, so the whole Conversations product moved to `conversations.voicetel.com` and Messaging Service to `messaging.voicetel.com` — hosts are derived from the base URL automatically, with `messaging_base_url` / `conversations_base_url` (per-language naming) overrides for custom hosts. Spec operation count 307 → 321 (+14 ops). Shipped uniformly across all 8 SDKs; released alongside integrated dependency/security updates.
+Release highlights:
+- **v0.7.x and earlier** — calls, conferences, queues, applications, recordings, incoming phone numbers, SMS and REST payment-session control; README consistency updates and model fixes.
+- **v0.8.x** — SIP domain, credential-list and IP access-control management, plus Routes v2 SIP-domain region settings.
+- **v0.9.1** — Conversations v1 (including service-scoped resources), Voice v1, Routes v2 phone-number region settings, and Assistants v1.
+- **v0.9.2** — Messaging Service management, Pricing v1/v2 lookups (including Trunking rates), and separate Conversations/Messaging product hosts with configurable overrides.
+
+### Pending SDK fixes
+
+The current source work includes missing account/balance, caller-ID, message-media, recorded-transcription, export, usage, SIP-registration, Messaging Service phone-number and YAML-diagnostic operations; pagination, retry, download and model fixes; webhook-signature helpers; and the TypeScript CommonJS packaging repair. These are **unreleased fixes**, not features of the existing registry packages merely because their working-tree version still reads `0.9.2`. See each SDK's Unreleased changelog when those changes land. The resource table below distinguishes these additions from released coverage; it does not claim complete operation coverage for v0.9.2.
 
 ## 🛠️ Tooling
 
 | Tool | Repo | Purpose |
 |---|---|---|
-| **CLI** | [voiceml-cli](https://github.com/voicetel/voiceml-cli) | Interactive REPL + `-x` one-shot commands against the VoiceML API |
-| **Collections** | [voiceml-api-collections](https://github.com/voicetel/voiceml-api-collections) | Postman v2.1 + Bruno collections for all 128 operations |
+| **CLI** | [voiceml-cli](https://github.com/voicetel/voiceml-cli) | Interactive REPL + `-x` one-shot commands for a subset of the API. Independent release line; latest GitHub Release is [v0.2.0](https://github.com/voicetel/voiceml-cli/releases/tag/v0.2.0), built against an older SDK. |
+| **Collections** | [voiceml-api-collections](https://github.com/voicetel/voiceml-api-collections) | Postman v2.1 + Bruno requests. The [v0.9.1 release archive](https://github.com/voicetel/voiceml-api-collections/releases/tag/v0.9.1) predates the generated collections on `main`; current-spec regeneration and host/body fixes await release. Consult the repository for snapshot coverage. |
 
 ## ✨ What every SDK gives you
 
-- **Strongly typed end-to-end** — every request body and response payload is a typed struct / class / record in the host language.
-- **Twilio-compatible wire format** — the same `2010-04-01/Accounts/{AccountSid}/...` paths (with `.json` suffix), the same HTTP Basic auth, the same `{code, message, more_info, status}` error envelope. If you're migrating from `twilio-python` / `twilio-node` / etc., the constructor signature is the same (`auth_token` / `authToken` alias supported alongside `api_key` / `apiKey`).
-- **Auto-retry on 429 / 5xx** with `Retry-After` honored, exponential backoff capped at 8 s. Default `maxRetries = 2`.
-- **Structured errors** — every SDK exposes an `ApiError` (or equivalent) plus status-keyed subclasses: `AuthenticationError` (401), `NotFoundError` (404), `ConflictError` (409), `GoneError` (410), `RateLimitError` (429), `NotImplementedAPIError` (501), `ServerError` (5xx). The `.more_info` / `.MoreInfo` accessor surfaces Twilio's docs URL on every error. Catch broadly or pattern-match.
-- **Form-urlencoded by default**, JSON-body acceptance documented — matches Twilio's wire convention exactly.
-- **Booleans as `"true"` / `"false"` strings** — what Twilio sends; what every SDK here sends.
-- **Cursor-style pagination** — `next_page_uri` / `previous_page_uri` honored; Python and TypeScript include an `iterate()` helper for `/Calls`.
-- **Recording audio fetch** — `recordings.get_audio(sid)` transparently follows the 302 → S3 presigned-URL redirect; you get the WAV bytes regardless of where they were served from.
-- **Zero codegen footprint** — every line is hand-written. No Swagger Codegen artifacts, no auto-generated method names like `accountsAccountSidCallsGet`.
+- **Native request/response models** and resource-oriented methods, with per-language naming.
+- **VoiceML HTTP Basic authentication**, with `auth_token` / `authToken` aliases for migration-compatible constructor usage.
+- **Structured API errors** exposing HTTP status, API code and `more_info` where supplied. Go uses error helpers; class-based SDKs use their documented exception hierarchies.
+- **Endpoint-specific encoding**: form-urlencoded account-resource writes and JSON for endpoints that declare JSON, including Assistants.
+- **Configurable HTTP clients, timeouts and retries**, plus list and recording-audio helpers. Exact behavior depends on the installed release.
+
+The pending transport fixes follow server-provided continuation links rather than page counters; retry GET/HEAD/DELETE/PUT on retryable status/transport failures; and retry POST/PATCH only on 429 or connection-establishment failures where nothing was sent. They add HTTP-date `Retry-After` parsing with a 60-second cap and full-jitter backoff (0.5-second base, 8-second ceiling; default two retries). Download fixes strip credentials on cross-origin redirects and refuse HTTPS-to-HTTP redirects. These fixes require the next SDK release or a build from the repaired source.
 
 ## 📖 API Documentation
 
 - **Reference docs:** [voicetel.com/docs/api/v0.9/voiceml/](https://voicetel.com/docs/api/v0.9/voiceml/)
 - **Validator:** [voicetel.com/voiceml/validator/](https://voicetel.com/voiceml/validator/)
 - **SDK catalogue:** [voicetel.com/docs/voiceml-sdks/](https://voicetel.com/docs/voiceml-sdks/)
+- **SDK source:** the official GitHub repositories in [Pick your language](#-pick-your-language); this catalogue is maintained at [voicetel/voiceml-sdks](https://github.com/voicetel/voiceml-sdks).
 
 ## 🔑 Authentication, in 30 seconds
 
-VoiceML uses **HTTP Basic auth** — the same shape Twilio uses:
+VoiceML uses **HTTP Basic auth**:
 
-- **Username** = your `AccountSid` (Twilio format: literal `AC` + 32 hex chars)
-- **Password** = your per-tenant API key (or `auth_token` if you're using the Twilio-compat alias)
+- **Username** = your VoiceML `AccountSid` (literal `AC` + 32 hex characters).
+- **Password** = your VoiceML API key (`auth_token` / `authToken` is only an SDK argument alias).
 
-The same value the Twilio SDK validates in its constructor is what you pass to the VoiceML SDK.
+Twilio-issued credentials do **not** work. Replace the sample AccountSid and key below with your VoiceML credentials, and replace the fictional phone numbers and example TwiML URL before running. These examples create an outbound call; verification compiles or mocks them without calling production.
 
 ```python
 # Python
 from voiceml import Client
 from voiceml.models import CreateCallRequest
 
-with Client(account_sid="AC…", api_key="…") as c:
+with Client(account_sid="AC00000000000000000000000000000001", api_key="your-voiceml-api-key") as c:
     call = c.calls.create(CreateCallRequest(
-        To="+18005551234", From="+18005550000", Url="https://example.com/twiml",
+        to="+14155550100", from_="+14155550101", url="https://example.com/twiml",
     ))
 ```
 
 ```ts
 // TypeScript / Node
-import { Client } from 'voiceml';
+import { Client } from '@voicetel.com/voiceml';
 
-const c = new Client({ accountSid: 'AC…', apiKey: '…' });
+const c = new Client({ accountSid: 'AC00000000000000000000000000000001', apiKey: 'your-voiceml-api-key' });
 const call = await c.calls.create({
-  To: '+18005551234', From: '+18005550000', Url: 'https://example.com/twiml',
+  To: '+14155550100', From: '+14155550101', Url: 'https://example.com/twiml',
 });
 ```
 
 ```go
-// Go
-import voiceml "github.com/voicetel/voiceml-go-sdk"
+package main
 
-c, _ := voiceml.NewClient(voiceml.ClientOptions{AccountSid: "AC…", APIKey: "…"})
-call, _ := c.Calls.Create(ctx, &voiceml.CreateCallParams{
-    To: "+18005551234", From: "+18005550000", URL: voiceml.String("https://example.com/twiml"),
-})
+import (
+    "context"
+    "fmt"
+    "log"
+
+    voiceml "github.com/voicetel/voiceml-go-sdk"
+)
+
+func main() {
+    c, err := voiceml.NewClient(voiceml.ClientOptions{
+        AccountSid: "AC00000000000000000000000000000001", APIKey: "your-voiceml-api-key",
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    call, err := c.Calls.Create(context.Background(), voiceml.CreateCallParams{
+        To: "+14155550100", From: "+14155550101", URL: voiceml.String("https://example.com/twiml"),
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    fmt.Println(call.Sid)
+}
 ```
 
 ```java
@@ -144,9 +175,10 @@ call, _ := c.Calls.Create(ctx, &voiceml.CreateCallParams{
 import com.voicetel.voiceml.VoicemlClient;
 import com.voicetel.voiceml.models.CreateCallRequest;
 
-VoicemlClient c = VoicemlClient.builder().accountSid("AC…").apiKey("…").build();
+VoicemlClient c = VoicemlClient.builder()
+    .accountSid("AC00000000000000000000000000000001").apiKey("your-voiceml-api-key").build();
 var call = c.calls().create(CreateCallRequest.builder()
-    .to("+18005551234").from("+18005550000").url("https://example.com/twiml").build());
+    .to("+14155550100").from("+14155550101").url("https://example.com/twiml").build());
 ```
 
 ```csharp
@@ -154,20 +186,25 @@ var call = c.calls().create(CreateCallRequest.builder()
 using VoiceML;
 using VoiceML.Models;
 
-var client = new VoiceMLClient(new ClientOptions { AccountSid = "AC…", ApiKey = "…" });
+using var client = new VoiceMLClient(new ClientOptions {
+    AccountSid = "AC00000000000000000000000000000001", ApiKey = "your-voiceml-api-key",
+});
 var call = await client.Calls.CreateAsync(new CreateCallRequest {
-    To = "+18005551234", From = "+18005550000", Url = "https://example.com/twiml",
+    To = "+14155550100", From = "+14155550101", Url = "https://example.com/twiml",
 });
 ```
 
 ```php
+<?php
 // PHP
+require __DIR__ . '/vendor/autoload.php';
+
 use VoiceML\Client;
 use VoiceML\Model\CreateCallRequest;
 
-$c = new Client(accountSid: 'AC…', apiKey: '…');
+$c = new Client(accountSid: 'AC00000000000000000000000000000001', apiKey: 'your-voiceml-api-key');
 $call = $c->calls->create(new CreateCallRequest(
-    to: '+18005551234', from: '+18005550000', url: 'https://example.com/twiml',
+    to: '+14155550100', from: '+14155550101', url: 'https://example.com/twiml',
 ));
 ```
 
@@ -175,57 +212,69 @@ $call = $c->calls->create(new CreateCallRequest(
 # Ruby
 require 'voiceml'
 
-c = VoiceML::Client.new(account_sid: 'AC…', api_key: '…')
-call = c.calls.create(to: '+18005551234', from: '+18005550000', url: 'https://example.com/twiml')
+c = VoiceML::Client.new(account_sid: 'AC00000000000000000000000000000001', api_key: 'your-voiceml-api-key')
+call = c.calls.create(to: '+14155550100', from: '+14155550101', url: 'https://example.com/twiml')
 ```
 
 ```swift
 // Swift
 import VoiceML
 
-let c = try VoiceMLClient(options: .init(accountSid: "AC…", apiKey: "…"))
-let call = try await c.calls.create(.init(to: "+18005551234", from: "+18005550000", url: "https://example.com/twiml"))
+let c = try VoiceMLClient(options: .init(accountSid: "AC00000000000000000000000000000001", apiKey: "your-voiceml-api-key"))
+let call = try await c.calls.create(.init(to: "+14155550100", from: "+14155550101", url: "https://example.com/twiml"))
 ```
 
 ## 🧩 Resource groups
 
-All eight SDKs expose the same eight top-level resources, each hanging off the client as a property:
+Resource names below are conceptual: Python/Ruby use snake_case, TypeScript/PHP/Swift use camelCase, C#/Go use exported members, and Java uses accessor methods. **Released** means that the resource family exists in v0.9.2, not that every current spec operation was implemented then. **Pending** identifies additions in the unreleased source fixes.
 
-| Resource | Covers |
-|---|---|
-| `client.calls` | Originate, fetch, terminate, hot-swap TwiML, list filtered by Status / StartTime — plus the per-call sub-resources: **Recordings**, **Streams** (audio_fork / `MZ` sids), **Siprec** (`SR` sids), **Transcriptions** (`RT` sids, real-time via Deepgram / Google / AWS / Azure), **Notifications**, **Events**, **UserDefinedMessages**, and **Payments** (REST `<Pay>` start / Capture advance / Status complete or cancel) |
-| `client.conferences` | List, fetch, end. Plus **Participants** (mute / hold / kick) and **conference-scoped Recordings** |
-| `client.messages` | Outbound SMS — create, fetch, list (To / From / DateSent filters), update (Body redaction; Status=canceled), delete. Pagination iterator. |
-| `client.queues` | Create (idempotent on `FriendlyName`), list, update, delete. Plus **Members** — list, peek-front, dequeue-front, dequeue-specific |
-| `client.applications` | CRUD on stored TwiML + callback bundles dispatched via `<Dial><Application>` |
-| `client.recordings` | Account-wide list, metadata fetch, audio fetch (follows S3 redirect), delete |
-| `client.incoming_phone_numbers` | List, create, fetch, update, delete tenant-assigned DIDs (PN-prefixed sids; `Capabilities` sub-struct; full Twilio-compat field surface) |
-| `client.diagnostics` | `/health` deep probe (memdb / FreeSWITCH / disk / load), `/openapi.json` |
+| Resource group | Released v0.9.2 coverage | Pending source additions/fixes |
+|---|---|---|
+| Calls | Create, fetch, list, update, delete; call recordings; start/stop Streams, SIPREC and live Transcriptions; notifications, events, payment sessions, user-defined-message stub | Remove unsupported GETs below; request/model and transport fixes |
+| Conferences | List, fetch, end; participants; recording list/fetch/update/delete | Start conference recording |
+| Messages | SMS create/fetch/list/update/delete | MMS request fields and message-media list/fetch/delete |
+| Queues | Queue management and member list/peek/dequeue | Continuation-link pagination fixes |
+| Applications | Stored TwiML and callback configuration | SMS/delivery callback fields |
+| Recordings and recorded transcriptions | Account recording list, metadata/audio fetch, delete | Account- and recording-scoped recorded-transcription list/fetch/delete; download fixes |
+| Incoming phone numbers | Number management and Local/Mobile/TollFree variants | SMS routing fields and corrected list/request models |
+| Accounts and balance | — | Fetch/update authenticated account; fetch balance |
+| Outgoing caller IDs | — | Verify, list, fetch, update, delete |
+| Usage records | — | List and named date windows |
+| Notifications and exports | Account notification log | Daily event-log archive list/download |
+| SIP | Domains, credential lists/credentials, IP ACLs/addresses, domain mappings for calls and registrations | Live SIP-registration listing |
+| Voice v1 | BYOC trunks, connection policies/targets, dialing-permission settings, source-IP mappings, IP records | Model, path and transport fixes |
+| Routes v2 | Inbound processing regions for SIP domains and phone numbers | Path-encoding fixes |
+| Pricing v1/v2 | Read-only Voice, Messaging, Phone Numbers and Trunking country/number rate lookups | Path/model fixes |
+| Conversations v1 | Conversations, messages, participants, receipts, webhooks, roles, users, credentials, configuration, services and service-scoped resources | Continuation-link and model fixes |
+| Messaging v1 Services | Service create/list/fetch/update/delete on the messaging host | Service phone-number sender-pool list/add/fetch/remove |
+| Assistants v1 | Assistants, tools, knowledge/status/chunks, sessions/messages, feedback and policies | Corrected list/request models |
+| Diagnostics | `/health`, `/openapi.json` | Credential-less transport helpers; `/openapi.yaml`, `/openapi.yml` |
 
-## 🔁 Twilio drop-in
+**Unsupported call-subresource GETs:** the server returns HTTP **405**, API code **20004**, for list/fetch at `/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/Streams.json`, `/Streams/{Sid}.json`, `/Siprec.json`, `/Siprec/{Sid}.json`, `/Transcriptions.json` and `/Transcriptions/{Sid}.json` (all under that call prefix). The pending SDK fixes remove those methods. Use the supported POST start/stop operations; recorded-transcription retrieval is a separate resource.
 
-The simplest migration path from `twilio-*` to VoiceML:
+Conversations requests use `https://conversations.voicetel.com`; Messaging Service requests use `https://messaging.voicetel.com`. Other resources use `https://voiceml.voicetel.com`. Product-base-URL overrides are available for custom deployments; see the SDK-specific option names.
+
+## 🔁 Twilio-compatible migration
+
+Migration changes credentials, endpoint configuration and SDK method usage. For example, the VoiceML Python client accepts `auth_token` as an alias, but its value must be your **VoiceML API key**:
 
 ```python
-# Before
-from twilio.rest import Client as TwilioClient
-client = TwilioClient("AC…", "<auth_token>")
-
-# After
 from voiceml import Client
-client = Client(account_sid="AC…", auth_token="<auth_token>")  # api_key= also works
+
+with Client(account_sid="AC00000000000000000000000000000001", auth_token="your-voiceml-api-key") as client:
+    pass  # Use VoiceML resource methods here; api_key= also works.
 ```
 
-The constructor signature is the same `(account_sid, secret)` shape. `auth_token` / `authToken` is accepted as an alias for `api_key` / `apiKey`. Method names follow the resource map above (`client.calls.create(...)`) rather than Twilio's nested `client.api.v2010.accounts(sid).calls.create(...)` chain — flatter and language-idiomatic.
+Method names follow each language's resource map, such as `client.calls.create(...)`. Review supported fields and response models in the selected SDK before migrating an application.
 
-Where VoiceML extends Twilio:
+VoiceML-specific details:
 - `Conference.member_count` on the live conference response.
 - `Stream` sids are `MZ`-prefixed; `Siprec` is `SR`; `Transcription` is `RT`.
-- `CallTranscription` exposes `transcription_engine` (`deepgram` / `google` / `aws` / `azure`) and `language_code` directly on the resource.
-- The error class carries a typed `.more_info` / `.MoreInfo` accessor matching Twilio's docs-URL field.
+- Live-transcription start requests select an engine and language; do not rely on those request fields being echoed in the response.
+- Error helpers expose `more_info` when the server supplies a documentation URL.
 
-Where VoiceML deliberately omits Twilio:
-- No Studio, Flex, Verify, Pricing, Trunking, IP-Messaging surfaces.
+Scope and limitations:
+- Studio, Flex and Verify are outside this catalogue's API scope. Pricing lookups, SIP trunking configuration, Conversations and Messaging Services are included as described above; this is not a claim of support for every Twilio product or operation.
 - `POST /Calls/{Sid}/UserDefinedMessages` returns 501 (mounted as a compat stub).
 - `POST /Conferences/{Sid}` v1 supports only `Status=completed`; Twilio's `AnnounceUrl` / `AnnounceMethod` aren't yet implemented.
 
@@ -233,21 +282,29 @@ Every SDK's README lists the per-language nuances.
 
 ## 🔢 Versioning
 
-- Latest **released** SDK version: **v0.9.2** (matches the OpenAPI spec tag on GitHub).
-- SDK package version tracks the API spec version in lockstep.
-- The OpenAPI source of truth is published at [voicetel.com/docs/api/v0.9/voiceml/](https://voicetel.com/docs/api/v0.9/voiceml/). When the spec bumps, update all repos listed in this catalogue; each repo's GitHub Releases record the change.
+- Latest **released SDK repository tags**: **v0.9.2**. See the release table for links and the C# note for package availability. This catalogue's latest release is **v0.9.1**.
+- The eight language SDKs track the API spec version together at release time. The CLI has its own version line; collections and catalogue releases can lag.
+- A spec version alone does not establish operation coverage: the document can change before the next version cut. Match coverage claims to a dated spec snapshot and a passing contract test, and check Unreleased changes separately from published packages.
+- The public API reference is at [voicetel.com/docs/api/v0.9/voiceml/](https://voicetel.com/docs/api/v0.9/voiceml/). The path uses major.minor, so patch releases stay on `/v0.9/`.
 
 ## 🤝 Contributing
 
 Each repo has its own contribution rules in its `README`. In general:
 
 - Open an issue on the affected SDK's repo describing the change.
-- Send a PR against `main`. CI runs tests + lint + coverage on every PR.
+- Send a PR against `main` in the affected repository and run its documented checks.
 - Bugs that span multiple SDKs (spec drift, model mistakes) should be reported here in `voicetel/voiceml-sdks` and we'll fan them out.
+
+Catalogue CI checks links, advertised registry versions, and compilation of the Go and TypeScript quickstarts. Run `python3 scripts/check_examples.py --scratch /tmp/voiceml-catalogue-check` locally; optional `--go-module` and `--typescript-package` arguments verify a local SDK checkout/build without modifying it. Registry verification is read-only: `python3 scripts/check_registries.py`. The catalogue ships documentation, not an SDK package.
 
 ## 📄 License
 
-Every SDK in this catalogue is licensed under the **MIT License**. See each repo's `LICENSE` file (and this repo's [LICENSE](LICENSE)).
+This catalogue is licensed under the **MIT License**: see [LICENSE](LICENSE). SDK terms are separate. As checked on 2026-10-17:
+
+- **Python, TypeScript, Go, Java, C# and PHP** carry **MIT with Commons Clause** terms in their repository `LICENSE` files.
+- **Ruby and Swift** carry plain **MIT** licences.
+
+Read the `LICENSE` in the specific SDK repository linked above; a registry badge or package metadata is not a substitute for that text.
 
 ---
 

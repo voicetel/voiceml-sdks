@@ -3,8 +3,8 @@
 ## Reporting a Vulnerability
 
 This repository is the catalogue for the VoiceML SDK family — its
-content is documentation (`README.md`, `LICENSE`) only; there is no
-executable code shipped from this repo.
+ships documentation, not an SDK package. Repository verification scripts
+compile examples and check public registry metadata; they do not call the API.
 
 For vulnerabilities in **any of the SDK repos** (Go, Python,
 TypeScript / Node, Java, C#, Ruby, PHP, Swift) or the **CLI** or
@@ -28,6 +28,21 @@ For a cross-cutting issue that affects every SDK (spec drift,
 shared model defect), file the private advisory against whichever
 SDK first reproduces the issue and we will fan it out to the others.
 
-For issues in this catalogue's own content (broken links, stale
-version references) please open a regular public issue — those are
-documentation defects, not security ones.
+For ordinary content issues (broken links, stale version references), open
+a regular public issue. For a security-sensitive catalogue issue, such as
+an install command pointing to an unexpected package or credentials exposed
+in an example, use this repository's private reporting form:
+<https://github.com/voicetel/voiceml-sdks/security/advisories/new>.
+
+## Package identity
+
+- The official npm package is `@voicetel.com/voiceml`.
+- As checked on 2026-10-17, `VoiceML` is not published on nuget.org. Follow
+  the README's official-source/local-feed instructions with an explicit
+  `--source` until publication is confirmed.
+- VoiceML authentication requires a VoiceML AccountSid and API key.
+  Twilio-issued credentials do not authenticate with VoiceML.
+
+For SDK security support, consult the affected repository's policy; the
+current supported SDK release line is `0.9.x`. The CLI uses its own version
+line. Catalogue corrections are maintained on `main`.
