@@ -4,9 +4,29 @@ import json
 import os
 from pathlib import Path
 import re
+import sys
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 from xml.etree import ElementTree
+
+
+PENDING = json.loads((Path(__file__).resolve().parent.parent / "pending-registries.json").read_text())
+
+
+def expect_pending(name, probe):
+    """Registries listed in pending-registries.json may lag; once they serve
+    the release the entry must be deleted to re-enable the strict check."""
+    if name not in PENDING:
+        probe()
+        return
+    try:
+        probe()
+    except HTTPError as exc:
+        if exc.code == 404:
+            print(f"PENDING ({name}): {PENDING[name]}")
+            return
+        raise
+    sys.exit(f"{name} now serves the release - remove it from pending-registries.json to re-enable the strict check")
 
 
 def get(url: str, *, missing: bool = False) -> bytes:
@@ -34,15 +54,20 @@ def verify(condition: bool, message: str) -> None:
 
 def main() -> None:
     readme = (Path(__file__).resolve().parents[1] / "README.md").read_text()
-    version = re.search(r"API-v([\d.]+)-", readme).group(1)
+    sdk_tags = {t.lstrip("v") for _, t in re.findall(r"https://github.com/(voicetel/[^/]+)/releases/tag/(v[\d.]+)", readme)}
+    version = max(sdk_tags, key=lambda v: tuple(int(x) for x in v.split(".")))
     pypi = json.loads(get(f"https://pypi.org/pypi/voiceml/{version}/json"))
     verify(pypi["info"]["version"] == version, "PyPI version mismatch")
-    npm = json.loads(get(f"https://registry.npmjs.org/@voicetel.com%2fvoiceml/{version}"))
-    verify(npm["name"] == "@voicetel.com/voiceml" and npm["version"] == version, "npm identity/version mismatch")
+    def _npm():
+        npm = json.loads(get(f"https://registry.npmjs.org/@voicetel.com%2fvoiceml/{version}"))
+        verify(npm["name"] == "@voicetel.com/voiceml" and npm["version"] == version, "npm identity/version mismatch")
+    expect_pending("npm", _npm)
     go = json.loads(get(f"https://proxy.golang.org/github.com/voicetel/voiceml-go-sdk/@v/v{version}.info"))
     verify(go["Version"] == f"v{version}", "Go proxy version mismatch")
-    pom = ElementTree.fromstring(get(f"https://repo.maven.apache.org/maven2/com/voicetel/voiceml/{version}/voiceml-{version}.pom"))
-    verify(pom.findtext("{*}version") == version, "Maven version mismatch")
+    def _maven():
+        pom = ElementTree.fromstring(get(f"https://repo.maven.apache.org/maven2/com/voicetel/voiceml/{version}/voiceml-{version}.pom"))
+        verify(pom.findtext("{http://maven.apache.org/POM/4.0.0}version") == version, "Maven version mismatch")
+    expect_pending("maven", _maven)
     ruby = json.loads(get(f"https://rubygems.org/api/v2/rubygems/voiceml/versions/{version}.json"))
     verify(ruby["version"] == version, "RubyGems version mismatch")
     php = json.loads(get("https://repo.packagist.org/p2/voicetel/voiceml.json"))

@@ -83,6 +83,7 @@ Release highlights:
 - **v0.8.x** — SIP domain, credential-list and IP access-control management, plus Routes v2 SIP-domain region settings.
 - **v0.9.1** — Conversations v1 (including service-scoped resources), Voice v1, Routes v2 phone-number region settings, and Assistants v1.
 - **v0.9.2** — Messaging Service management, Pricing v1/v2 lookups (including Trunking rates), and separate Conversations/Messaging product hosts with configurable overrides.
+- **v0.9.3** (2026-10-18) — correctness release: list iteration now follows the server's page links (the previous page-counter loop never terminated against the current API), POSTs are no longer replayed after timeouts or 5xx, per-call GETs the API retired are removed, credentials are kept out of default object dumps and storage redirects, and every SDK gained ~40 operations (333/333 spec coverage, enforced by committed contract tests) plus webhook signature validation. See each repository's release notes for endpoint-precise breaking changes.
 
 ### Pending SDK fixes
 
@@ -92,8 +93,8 @@ The current source work includes missing account/balance, caller-ID, message-med
 
 | Tool | Repo | Purpose |
 |---|---|---|
-| **CLI** | [voiceml-cli](https://github.com/voicetel/voiceml-cli) | Interactive REPL + `-x` one-shot commands for a subset of the API. Independent release line; latest GitHub Release is [v0.2.0](https://github.com/voicetel/voiceml-cli/releases/tag/v0.2.0), built against an older SDK. |
-| **Collections** | [voiceml-api-collections](https://github.com/voicetel/voiceml-api-collections) | Postman v2.1 + Bruno requests. The [v0.9.1 release archive](https://github.com/voicetel/voiceml-api-collections/releases/tag/v0.9.1) predates the generated collections on `main`; current-spec regeneration and host/body fixes await release. Consult the repository for snapshot coverage. |
+| **CLI** | [voiceml-cli](https://github.com/voicetel/voiceml-cli) | Interactive REPL + `-x` one-shot commands for a subset of the API. Independent release line; latest GitHub Release is [v0.2.1](https://github.com/voicetel/voiceml-cli/releases/tag/v0.2.1), built against the v0.9.3 SDK. Note: `go install …@latest` still resolves the stale pre-rename `v0.6.6` tag; install the release binaries or pin `@v0.2.1` until a >v0.6.6 line with retractions lands. |
+| **Collections** | [voiceml-api-collections](https://github.com/voicetel/voiceml-api-collections) | Postman v2.1 + Bruno requests. The [v0.9.3 release](https://github.com/voicetel/voiceml-api-collections/releases/tag/v0.9.3) is regenerated for the current spec: 333 operations, per-product host variables, and spec-correct form bodies. |
 
 ## ✨ What every SDK gives you
 
@@ -282,7 +283,7 @@ Every SDK's README lists the per-language nuances.
 
 ## 🔢 Versioning
 
-- Latest **released SDK repository tags**: **v0.9.2**. See the release table for links and the C# note for package availability. This catalogue's latest release is **v0.9.1**.
+- Latest **released SDK repository tags**: **v0.9.3** (published to PyPI, npm*, Go proxy, Maven*, RubyGems, Packagist; *npm and Maven publishes currently blocked — tracked in `pending-registries.json`). This catalogue's latest release is **v0.9.3**.
 - The eight language SDKs track the API spec version together at release time. The CLI has its own version line; collections and catalogue releases can lag.
 - A spec version alone does not establish operation coverage: the document can change before the next version cut. Match coverage claims to a dated spec snapshot and a passing contract test, and check Unreleased changes separately from published packages.
 - The public API reference is at [voicetel.com/docs/api/v0.9/voiceml/](https://voicetel.com/docs/api/v0.9/voiceml/). The path uses major.minor, so patch releases stay on `/v0.9/`.

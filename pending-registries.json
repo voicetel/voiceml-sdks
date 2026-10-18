@@ -1,0 +1,4 @@
+{
+  "npm": "Trusted publishing for @voicetel.com/voiceml not configured (CI publish token lacks write); npm 0.9.2 remains live with the broken CJS build - the fix ships with the next npm publish.",
+  "maven": "central-publishing validation: 'Bundle has content that does NOT have a .pom file: com/voicetel/voiceml' on two attempts; locally reproduced bundle is clean - needs Central Portal deployment-validation inspection with the repo token."
+}
