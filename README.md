@@ -45,7 +45,7 @@ Each row links to the official SDK source. Install commands select published pac
 
 ### C# installation from source
 
-As checked on **2026-10-17**, `VoiceML` is **not published on nuget.org**. A GitHub Release is not proof of a NuGet publication. Build a package from the [official source](https://github.com/voicetel/voiceml-csharp-sdk) and select its local feed explicitly. With the .NET 10 SDK, run from a directory where you want the checkout, feed and application:
+As checked on **2026-10-18**, `VoiceML` is **not published on nuget.org**. A GitHub Release is not proof of a NuGet publication. Build a package from the [official source](https://github.com/voicetel/voiceml-csharp-sdk) and select its local feed explicitly. With the .NET 10 SDK, run from a directory where you want the checkout, feed and application:
 
 ```sh
 git clone https://github.com/voicetel/voiceml-csharp-sdk.git
@@ -65,18 +65,18 @@ dotnet build MyVoiceApp/MyVoiceApp.csproj -c Release
 
 ## 🏷️ Releases
 
-Release status checked **2026-10-17**: all eight SDK repositories have a **v0.9.2 GitHub Release**. Registry availability is separate: C# still requires the source/local-feed path above. This catalogue's own latest GitHub Release is [v0.9.1](https://github.com/voicetel/voiceml-sdks/releases/tag/v0.9.1); the SDK release table does not imply a v0.9.2 catalogue release.
+Release status checked **2026-10-18**: all eight SDK repositories have a **v0.9.3 GitHub Release** (pagination, retry-safety and spec-conformance fixes on top of v0.9.2). Registry availability is separate: C# still requires the source/local-feed path above. This catalogue's own latest GitHub Release is [v0.9.3](https://github.com/voicetel/voiceml-sdks/releases/tag/v0.9.3).
 
 | Language | Latest release | All releases |
 |---|---|---|
-| 🐍 Python | [v0.9.2](https://github.com/voicetel/voiceml-python-sdk/releases/tag/v0.9.2) | [history](https://github.com/voicetel/voiceml-python-sdk/releases) |
-| 🟦 TypeScript / Node | [v0.9.2](https://github.com/voicetel/voiceml-node-sdk/releases/tag/v0.9.2) | [history](https://github.com/voicetel/voiceml-node-sdk/releases) |
-| 🐹 Go | [v0.9.2](https://github.com/voicetel/voiceml-go-sdk/releases/tag/v0.9.2) | [history](https://github.com/voicetel/voiceml-go-sdk/releases) |
-| ☕ Java | [v0.9.2](https://github.com/voicetel/voiceml-java-sdk/releases/tag/v0.9.2) | [history](https://github.com/voicetel/voiceml-java-sdk/releases) |
-| 🟪 C# / .NET | [v0.9.2](https://github.com/voicetel/voiceml-csharp-sdk/releases/tag/v0.9.2) | [history](https://github.com/voicetel/voiceml-csharp-sdk/releases) |
-| 🐘 PHP | [v0.9.2](https://github.com/voicetel/voiceml-php-sdk/releases/tag/v0.9.2) | [history](https://github.com/voicetel/voiceml-php-sdk/releases) |
-| 💎 Ruby | [v0.9.2](https://github.com/voicetel/voiceml-ruby-sdk/releases/tag/v0.9.2) | [history](https://github.com/voicetel/voiceml-ruby-sdk/releases) |
-| 🦅 Swift | [v0.9.2](https://github.com/voicetel/voiceml-swift/releases/tag/v0.9.2) | [history](https://github.com/voicetel/voiceml-swift/releases) |
+| 🐍 Python | [v0.9.3](https://github.com/voicetel/voiceml-python-sdk/releases/tag/v0.9.3) | [history](https://github.com/voicetel/voiceml-python-sdk/releases) |
+| 🟦 TypeScript / Node | [v0.9.3](https://github.com/voicetel/voiceml-node-sdk/releases/tag/v0.9.3) | [history](https://github.com/voicetel/voiceml-node-sdk/releases) |
+| 🐹 Go | [v0.9.3](https://github.com/voicetel/voiceml-go-sdk/releases/tag/v0.9.3) | [history](https://github.com/voicetel/voiceml-go-sdk/releases) |
+| ☕ Java | [v0.9.3](https://github.com/voicetel/voiceml-java-sdk/releases/tag/v0.9.3) | [history](https://github.com/voicetel/voiceml-java-sdk/releases) |
+| 🟪 C# / .NET | [v0.9.3](https://github.com/voicetel/voiceml-csharp-sdk/releases/tag/v0.9.3) | [history](https://github.com/voicetel/voiceml-csharp-sdk/releases) |
+| 🐘 PHP | [v0.9.3](https://github.com/voicetel/voiceml-php-sdk/releases/tag/v0.9.3) | [history](https://github.com/voicetel/voiceml-php-sdk/releases) |
+| 💎 Ruby | [v0.9.3](https://github.com/voicetel/voiceml-ruby-sdk/releases/tag/v0.9.3) | [history](https://github.com/voicetel/voiceml-ruby-sdk/releases) |
+| 🦅 Swift | [v0.9.3](https://github.com/voicetel/voiceml-swift/releases/tag/v0.9.3) | [history](https://github.com/voicetel/voiceml-swift/releases) |
 
 Release highlights:
 - **v0.7.x and earlier** — calls, conferences, queues, applications, recordings, incoming phone numbers, SMS and REST payment-session control; README consistency updates and model fixes.

@@ -2,7 +2,7 @@
 
 All notable changes to this catalogue are documented here.
 
-## [Unreleased]
+## [0.9.3] - 2026-10-18
 
 ### Fixed
 
