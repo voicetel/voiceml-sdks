@@ -35,9 +35,9 @@ Each row links to the official SDK source. Install commands select published pac
 | Language | Repo | Install | Idiomatic style |
 |---|---|---|---|
 | 🐍 **Python** | [voiceml-python-sdk](https://github.com/voicetel/voiceml-python-sdk) | `pip install voiceml` | `Client` + `AsyncClient`, Pydantic v2, httpx |
-| 🟦 **TypeScript / Node** | [voiceml-node-sdk](https://github.com/voicetel/voiceml-node-sdk) | `npm install @voicetel.com/voiceml` | ESM, async-only, `fetch`-based, zero runtime deps; CommonJS packaging fix pending release |
+| 🟦 **TypeScript / Node** | [voiceml-node-sdk](https://github.com/voicetel/voiceml-node-sdk) | `npm install @voicetel.com/voiceml` | ESM and CommonJS, async-only, `fetch`-based, zero runtime deps |
 | 🐹 **Go** | [voiceml-go-sdk](https://github.com/voicetel/voiceml-go-sdk) | `go get github.com/voicetel/voiceml-go-sdk` | `context.Context`, stdlib `net/http`, zero deps |
-| ☕ **Java** | [voiceml-java-sdk](https://github.com/voicetel/voiceml-java-sdk) | `com.voicetel:voiceml:0.9.2` | Java 11, `java.net.http`, Jackson, builders |
+| ☕ **Java** | [voiceml-java-sdk](https://github.com/voicetel/voiceml-java-sdk) | `com.voicetel:voiceml:0.9.3` | Java 11, `java.net.http`, Jackson, builders |
 | 🟪 **C# / .NET** | [voiceml-csharp-sdk](https://github.com/voicetel/voiceml-csharp-sdk) | NuGet publication pending — [build from source / local feed](#c-installation-from-source) | .NET 8+, `async/await`, `System.Text.Json`, no runtime package dependencies |
 | 🐘 **PHP** | [voiceml-php-sdk](https://github.com/voicetel/voiceml-php-sdk) | `composer require voicetel/voiceml` | PHP 8.1+, Guzzle 7, typed enums, PSR-4 |
 | 💎 **Ruby** | [voiceml-ruby-sdk](https://github.com/voicetel/voiceml-ruby-sdk) | `gem install voiceml` | Ruby 3.1+, stdlib `Net::HTTP`, kwargs, zero gem deps |
@@ -45,13 +45,13 @@ Each row links to the official SDK source. Install commands select published pac
 
 ### C# installation from source
 
-As checked on **2026-10-18**, `VoiceML` is **not published on nuget.org**. A GitHub Release is not proof of a NuGet publication. Build a package from the [official source](https://github.com/voicetel/voiceml-csharp-sdk) and select its local feed explicitly. With the .NET 10 SDK, run from a directory where you want the checkout, feed and application:
+As checked on **2026-10-19**, `VoiceML` is **not published on nuget.org**. A GitHub Release is not proof of a NuGet publication. Build a package from the [official source](https://github.com/voicetel/voiceml-csharp-sdk) and select its local feed explicitly. With the .NET 10 SDK, run from a directory where you want the checkout, feed and application:
 
 ```sh
 git clone https://github.com/voicetel/voiceml-csharp-sdk.git
 dotnet pack voiceml-csharp-sdk/src/VoiceML/VoiceML.csproj -c Release -o "$PWD/voiceml-local-feed"
 dotnet new console -n MyVoiceApp -f net8.0
-dotnet add MyVoiceApp/MyVoiceApp.csproj package VoiceML --version 0.9.2 --source "$PWD/voiceml-local-feed"
+dotnet add MyVoiceApp/MyVoiceApp.csproj package VoiceML --version 0.9.3 --source "$PWD/voiceml-local-feed"
 dotnet build MyVoiceApp/MyVoiceApp.csproj -c Release
 ```
 
@@ -65,7 +65,7 @@ dotnet build MyVoiceApp/MyVoiceApp.csproj -c Release
 
 ## 🏷️ Releases
 
-Release status checked **2026-10-18**: all eight SDK repositories have a **v0.9.3 GitHub Release** (pagination, retry-safety and spec-conformance fixes on top of v0.9.2). Registry availability is separate: C# still requires the source/local-feed path above. This catalogue's own latest GitHub Release is [v0.9.3](https://github.com/voicetel/voiceml-sdks/releases/tag/v0.9.3).
+Release status checked **2026-10-19**: all eight SDK repositories have a **v0.9.3 GitHub Release** (pagination, retry-safety and spec-conformance fixes on top of v0.9.2), and v0.9.3 is published to PyPI, npm, the Go proxy, Maven Central, RubyGems and Packagist. C# still requires the source/local-feed path above. This catalogue's own latest GitHub Release is [v0.9.3](https://github.com/voicetel/voiceml-sdks/releases/tag/v0.9.3).
 
 | Language | Latest release | All releases |
 |---|---|---|
@@ -85,10 +85,6 @@ Release highlights:
 - **v0.9.2** — Messaging Service management, Pricing v1/v2 lookups (including Trunking rates), and separate Conversations/Messaging product hosts with configurable overrides.
 - **v0.9.3** (2026-10-18) — correctness release: list iteration now follows the server's page links (the previous page-counter loop never terminated against the current API), POSTs are no longer replayed after timeouts or 5xx, per-call GETs the API retired are removed, credentials are kept out of default object dumps and storage redirects, and every SDK gained ~40 operations (333/333 spec coverage, enforced by committed contract tests) plus webhook signature validation. See each repository's release notes for endpoint-precise breaking changes.
 
-### Pending SDK fixes
-
-The current source work includes missing account/balance, caller-ID, message-media, recorded-transcription, export, usage, SIP-registration, Messaging Service phone-number and YAML-diagnostic operations; pagination, retry, download and model fixes; webhook-signature helpers; and the TypeScript CommonJS packaging repair. These are **unreleased fixes**, not features of the existing registry packages merely because their working-tree version still reads `0.9.2`. See each SDK's Unreleased changelog when those changes land. The resource table below distinguishes these additions from released coverage; it does not claim complete operation coverage for v0.9.2.
-
 ## 🛠️ Tooling
 
 | Tool | Repo | Purpose |
@@ -104,7 +100,7 @@ The current source work includes missing account/balance, caller-ID, message-med
 - **Endpoint-specific encoding**: form-urlencoded account-resource writes and JSON for endpoints that declare JSON, including Assistants.
 - **Configurable HTTP clients, timeouts and retries**, plus list and recording-audio helpers. Exact behavior depends on the installed release.
 
-The pending transport fixes follow server-provided continuation links rather than page counters; retry GET/HEAD/DELETE/PUT on retryable status/transport failures; and retry POST/PATCH only on 429 or connection-establishment failures where nothing was sent. They add HTTP-date `Retry-After` parsing with a 60-second cap and full-jitter backoff (0.5-second base, 8-second ceiling; default two retries). Download fixes strip credentials on cross-origin redirects and refuse HTTPS-to-HTTP redirects. These fixes require the next SDK release or a build from the repaired source.
+Since v0.9.3, every SDK follows server-provided continuation links rather than page counters; retries GET/HEAD/DELETE/PUT on retryable status/transport failures; and retries POST/PATCH only on 429 or connection-establishment failures where nothing was sent. It parses HTTP-date `Retry-After` with a 60-second cap and uses full-jitter backoff (0.5-second base, 8-second ceiling; default two retries). Downloads strip credentials on cross-origin redirects and refuse HTTPS-to-HTTP redirects. Releases before v0.9.3 do not have these fixes.
 
 ## 📖 API Documentation
 
@@ -227,9 +223,9 @@ let call = try await c.calls.create(.init(to: "+14155550100", from: "+1415555010
 
 ## 🧩 Resource groups
 
-Resource names below are conceptual: Python/Ruby use snake_case, TypeScript/PHP/Swift use camelCase, C#/Go use exported members, and Java uses accessor methods. **Released** means that the resource family exists in v0.9.2, not that every current spec operation was implemented then. **Pending** identifies additions in the unreleased source fixes.
+Resource names below are conceptual: Python/Ruby use snake_case, TypeScript/PHP/Swift use camelCase, C#/Go use exported members, and Java uses accessor methods. The first column is what v0.9.2 shipped for each resource family; the second is what v0.9.3 added or fixed. As of v0.9.3, every SDK covers all operations in the current spec, enforced by its committed contract tests.
 
-| Resource group | Released v0.9.2 coverage | Pending source additions/fixes |
+| Resource group | Through v0.9.2 | Added or fixed in v0.9.3 |
 |---|---|---|
 | Calls | Create, fetch, list, update, delete; call recordings; start/stop Streams, SIPREC and live Transcriptions; notifications, events, payment sessions, user-defined-message stub | Remove unsupported GETs below; request/model and transport fixes |
 | Conferences | List, fetch, end; participants; recording list/fetch/update/delete | Start conference recording |
@@ -251,7 +247,7 @@ Resource names below are conceptual: Python/Ruby use snake_case, TypeScript/PHP/
 | Assistants v1 | Assistants, tools, knowledge/status/chunks, sessions/messages, feedback and policies | Corrected list/request models |
 | Diagnostics | `/health`, `/openapi.json` | Credential-less transport helpers; `/openapi.yaml`, `/openapi.yml` |
 
-**Unsupported call-subresource GETs:** the server returns HTTP **405**, API code **20004**, for list/fetch at `/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/Streams.json`, `/Streams/{Sid}.json`, `/Siprec.json`, `/Siprec/{Sid}.json`, `/Transcriptions.json` and `/Transcriptions/{Sid}.json` (all under that call prefix). The pending SDK fixes remove those methods. Use the supported POST start/stop operations; recorded-transcription retrieval is a separate resource.
+**Unsupported call-subresource GETs:** the server returns HTTP **405**, API code **20004**, for list/fetch at `/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/Streams.json`, `/Streams/{Sid}.json`, `/Siprec.json`, `/Siprec/{Sid}.json`, `/Transcriptions.json` and `/Transcriptions/{Sid}.json` (all under that call prefix). v0.9.3 removed those methods from every SDK. Use the supported POST start/stop operations; recorded-transcription retrieval is a separate resource.
 
 Conversations requests use `https://conversations.voicetel.com`; Messaging Service requests use `https://messaging.voicetel.com`. Other resources use `https://voiceml.voicetel.com`. Product-base-URL overrides are available for custom deployments; see the SDK-specific option names.
 
@@ -283,7 +279,7 @@ Every SDK's README lists the per-language nuances.
 
 ## 🔢 Versioning
 
-- Latest **released SDK repository tags**: **v0.9.3** (published to PyPI, npm*, Go proxy, Maven*, RubyGems, Packagist; *npm and Maven publishes currently blocked — tracked in `pending-registries.json`). This catalogue's latest release is **v0.9.3**.
+- Latest **released SDK repository tags**: **v0.9.3** (published to PyPI, npm, the Go proxy, Maven Central, RubyGems and Packagist; NuGet publication is pending — see [C# installation from source](#c-installation-from-source)). This catalogue's latest release is **v0.9.3**.
 - The eight language SDKs track the API spec version together at release time. The CLI has its own version line; collections and catalogue releases can lag.
 - A spec version alone does not establish operation coverage: the document can change before the next version cut. Match coverage claims to a dated spec snapshot and a passing contract test, and check Unreleased changes separately from published packages.
 - The public API reference is at [voicetel.com/docs/api/v0.9/voiceml/](https://voicetel.com/docs/api/v0.9/voiceml/). The path uses major.minor, so patch releases stay on `/v0.9/`.

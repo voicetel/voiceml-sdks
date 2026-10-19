@@ -2,6 +2,14 @@
 
 All notable changes to this catalogue are documented here.
 
+## [Unreleased]
+
+### Fixed
+
+- npm and Maven Central now serve v0.9.3, so both are removed from `pending-registries.json`. This re-enables the strict registry check, which the scheduled run on 2026-10-19 had failed because Maven caught up.
+- README now describes the v0.9.3 transport, coverage and CommonJS fixes as released rather than pending, and updates the Java coordinate and C# local-feed version to 0.9.3.
+- The quickstart compile check now builds against the latest SDK release in the release table instead of the API version on the badge.
+
 ## [0.9.3] - 2026-10-18
 
 ### Fixed

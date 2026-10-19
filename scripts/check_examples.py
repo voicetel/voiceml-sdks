@@ -26,7 +26,10 @@ def main() -> None:
     parser.add_argument("--go-module", type=Path, help="Read-only local Go SDK replacement")
     parser.add_argument("--typescript-package", type=Path, help="Local built npm tarball or package")
     args = parser.parse_args()
-    version = re.search(r"API-v([\d.]+)-", (ROOT / "README.md").read_text()).group(1)
+    # Compile against the latest SDK release in the README's release table, which can be
+    # ahead of the API spec version shown on the badge.
+    tags = re.findall(r"https://github.com/voicetel/[^/]+/releases/tag/v([\d.]+)", (ROOT / "README.md").read_text())
+    version = max(tags, key=lambda v: tuple(int(x) for x in v.split(".")))
     env = os.environ.copy()
     env["GOWORK"] = "off"
     args.scratch.mkdir(parents=True, exist_ok=True)
