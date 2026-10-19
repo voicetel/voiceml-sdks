@@ -30,7 +30,7 @@ These SDKs include VoiceML extensions such as live transcription, per-call SIPRE
 
 ## 🎯 Pick your language
 
-Each row links to the official SDK source. Install commands select published packages except for C#, whose source/local-feed installation is described below. Coverage evolves with the OpenAPI document; use each repository's release notes and spec-contract results for the exact source snapshot it supports.
+Each row links to the official SDK source, and every install command selects a published package. Coverage evolves with the OpenAPI document; use each repository's release notes and spec-contract results for the exact source snapshot it supports.
 
 | Language | Repo | Install | Idiomatic style |
 |---|---|---|---|
@@ -38,34 +38,16 @@ Each row links to the official SDK source. Install commands select published pac
 | 🟦 **TypeScript / Node** | [voiceml-node-sdk](https://github.com/voicetel/voiceml-node-sdk) | `npm install @voicetel.com/voiceml` | ESM and CommonJS, async-only, `fetch`-based, zero runtime deps |
 | 🐹 **Go** | [voiceml-go-sdk](https://github.com/voicetel/voiceml-go-sdk) | `go get github.com/voicetel/voiceml-go-sdk` | `context.Context`, stdlib `net/http`, zero deps |
 | ☕ **Java** | [voiceml-java-sdk](https://github.com/voicetel/voiceml-java-sdk) | `com.voicetel:voiceml:0.9.3` | Java 11, `java.net.http`, Jackson, builders |
-| 🟪 **C# / .NET** | [voiceml-csharp-sdk](https://github.com/voicetel/voiceml-csharp-sdk) | NuGet publication pending — [build from source / local feed](#c-installation-from-source) | .NET 8+, `async/await`, `System.Text.Json`, no runtime package dependencies |
+| 🟪 **C# / .NET** | [voiceml-csharp-sdk](https://github.com/voicetel/voiceml-csharp-sdk) | `dotnet add package VoiceML` | .NET 8+, `async/await`, `System.Text.Json`, no runtime package dependencies |
 | 🐘 **PHP** | [voiceml-php-sdk](https://github.com/voicetel/voiceml-php-sdk) | `composer require voicetel/voiceml` | PHP 8.1+, Guzzle 7, typed enums, PSR-4 |
 | 💎 **Ruby** | [voiceml-ruby-sdk](https://github.com/voicetel/voiceml-ruby-sdk) | `gem install voiceml` | Ruby 3.1+, stdlib `Net::HTTP`, kwargs, zero gem deps |
 | 🦅 **Swift** | [voiceml-swift](https://github.com/voicetel/voiceml-swift) | SwiftPM: `https://github.com/voicetel/voiceml-swift` | Swift 5.9, `async throws`, `URLSession`, iOS/macOS/tvOS/watchOS/Linux |
 
-### C# installation from source
-
-As checked on **2026-10-19**, `VoiceML` is **not published on nuget.org**. A GitHub Release is not proof of a NuGet publication. Build a package from the [official source](https://github.com/voicetel/voiceml-csharp-sdk) and select its local feed explicitly. With the .NET 10 SDK, run from a directory where you want the checkout, feed and application:
-
-```sh
-git clone https://github.com/voicetel/voiceml-csharp-sdk.git
-dotnet pack voiceml-csharp-sdk/src/VoiceML/VoiceML.csproj -c Release -o "$PWD/voiceml-local-feed"
-dotnet new console -n MyVoiceApp -f net8.0
-dotnet add MyVoiceApp/MyVoiceApp.csproj package VoiceML --version 0.9.3 --source "$PWD/voiceml-local-feed"
-dotnet build MyVoiceApp/MyVoiceApp.csproj -c Release
-```
-
-Alternatively, use a source project reference after cloning:
-
-```sh
-dotnet new console -n MyVoiceApp -f net8.0
-dotnet add MyVoiceApp/MyVoiceApp.csproj reference voiceml-csharp-sdk/src/VoiceML/VoiceML.csproj
-dotnet build MyVoiceApp/MyVoiceApp.csproj -c Release
-```
+The official .NET package is [`VoiceML` on nuget.org](https://www.nuget.org/packages/VoiceML), owned by the `voicetel` organization. To build from source instead, follow the SDK's [installation guide](https://github.com/voicetel/voiceml-csharp-sdk/blob/main/docs/installation.md).
 
 ## 🏷️ Releases
 
-Release status checked **2026-10-19**: all eight SDK repositories have a **v0.9.3 GitHub Release** (pagination, retry-safety and spec-conformance fixes on top of v0.9.2), and v0.9.3 is published to PyPI, npm, the Go proxy, Maven Central, RubyGems and Packagist. C# still requires the source/local-feed path above. This catalogue's own latest GitHub Release is [v0.9.3](https://github.com/voicetel/voiceml-sdks/releases/tag/v0.9.3).
+Release status checked **2026-10-19**: all eight SDK repositories have a **v0.9.3 GitHub Release** (pagination, retry-safety and spec-conformance fixes on top of v0.9.2), and v0.9.3 is published to PyPI, npm, the Go proxy, Maven Central, RubyGems, Packagist and NuGet. This catalogue's own latest GitHub Release is [v0.9.3](https://github.com/voicetel/voiceml-sdks/releases/tag/v0.9.3).
 
 | Language | Latest release | All releases |
 |---|---|---|
@@ -279,7 +261,7 @@ Every SDK's README lists the per-language nuances.
 
 ## 🔢 Versioning
 
-- Latest **released SDK repository tags**: **v0.9.3** (published to PyPI, npm, the Go proxy, Maven Central, RubyGems and Packagist; NuGet publication is pending — see [C# installation from source](#c-installation-from-source)). This catalogue's latest release is **v0.9.3**.
+- Latest **released SDK repository tags**: **v0.9.3** (published to PyPI, npm, the Go proxy, Maven Central, RubyGems, Packagist and NuGet). This catalogue's latest release is **v0.9.3**.
 - The eight language SDKs track the API spec version together at release time. The CLI has its own version line; collections and catalogue releases can lag.
 - A spec version alone does not establish operation coverage: the document can change before the next version cut. Match coverage claims to a dated spec snapshot and a passing contract test, and check Unreleased changes separately from published packages.
 - The public API reference is at [voicetel.com/docs/api/v0.9/voiceml/](https://voicetel.com/docs/api/v0.9/voiceml/). The path uses major.minor, so patch releases stay on `/v0.9/`.

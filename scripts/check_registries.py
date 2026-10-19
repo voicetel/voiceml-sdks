@@ -29,20 +29,12 @@ def expect_pending(name, probe):
     sys.exit(f"{name} now serves the release - remove it from pending-registries.json to re-enable the strict check")
 
 
-def get(url: str, *, missing: bool = False) -> bytes:
+def get(url: str) -> bytes:
     headers = {"User-Agent": "voiceml-catalogue-check"}
     if url.startswith("https://api.github.com/") and os.environ.get("GITHUB_TOKEN"):
         headers["Authorization"] = f"Bearer {os.environ['GITHUB_TOKEN']}"
-    try:
-        with urlopen(Request(url, headers=headers), timeout=30) as response:
-            body = response.read()
-    except HTTPError as error:
-        if missing and error.code == 404:
-            print(f"Expected unpublished package: HTTP 404 {url}")
-            return b""
-        raise
-    if missing:
-        raise ValueError("NuGet VoiceML now exists: verify ownership and update the catalogue before recommending it")
+    with urlopen(Request(url, headers=headers), timeout=30) as response:
+        body = response.read()
     print(f"HTTP 200 {url}")
     return body
 
@@ -74,13 +66,22 @@ def main() -> None:
     verify(any(package["version"].removeprefix("v") == version for package in php["packages"]["voicetel/voiceml"]), "Packagist version missing")
     swift = json.loads(get(f"https://api.github.com/repos/voicetel/voiceml-swift/git/ref/tags/v{version}"))
     verify(swift["ref"] == f"refs/tags/v{version}", "Swift tag missing")
-    get("https://api.nuget.org/v3-flatcontainer/voiceml/index.json", missing=True)
+    def _nuget():
+        versions = json.loads(get("https://api.nuget.org/v3-flatcontainer/voiceml/index.json"))["versions"]
+        verify(version in versions, "NuGet version missing")
+        # The nuspec records where the package was built from; it must be the official repository.
+        nuspec = ElementTree.fromstring(get(f"https://api.nuget.org/v3-flatcontainer/voiceml/{version}/voiceml.nuspec"))
+        metadata = next(e for e in nuspec if e.tag.endswith("metadata"))
+        fields = {e.tag.split("}")[-1]: e for e in metadata}
+        verify(fields["id"].text == "VoiceML" and fields["version"].text == version, "NuGet identity/version mismatch")
+        verify(fields["repository"].get("url") == "https://github.com/voicetel/voiceml-csharp-sdk", "NuGet package built from an unexpected repository")
+    expect_pending("nuget", _nuget)
 
     releases = re.findall(r"https://github.com/(voicetel/[^/]+)/releases/tag/(v[\d.]+)", readme)
     for repo, tag in sorted(set(releases)):
         release = json.loads(get(f"https://api.github.com/repos/{repo}/releases/tags/{tag}"))
         verify(release["tag_name"] == tag and not release["draft"] and not release["prerelease"], f"Release unavailable: {repo} {tag}")
-    print("Advertised registry versions and GitHub Releases verified; NuGet absence remains explicit.")
+    print("Advertised registry versions and GitHub Releases verified.")
 
 
 if __name__ == "__main__":

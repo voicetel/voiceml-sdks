@@ -37,9 +37,9 @@ in an example, use this repository's private reporting form:
 ## Package identity
 
 - The official npm package is `@voicetel.com/voiceml`.
-- As checked on 2026-10-17, `VoiceML` is not published on nuget.org. Follow
-  the README's official-source/local-feed instructions with an explicit
-  `--source` until publication is confirmed.
+- The official NuGet package is `VoiceML`, owned by the `voicetel`
+  organization on nuget.org and published from voicetel/voiceml-csharp-sdk.
+  Treat similarly named packages from other owners as unofficial.
 - VoiceML authentication requires a VoiceML AccountSid and API key.
   Twilio-issued credentials do not authenticate with VoiceML.
 
