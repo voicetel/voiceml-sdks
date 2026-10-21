@@ -2,7 +2,7 @@
 
 Official client libraries for the [VoiceML REST API](https://voicetel.com/docs/api/v0.9/voiceml/) — VoiceTel's Twilio-compatible voice, messaging and answering-machine-detection service. Eight hand-written SDKs in public repositories; see [License](#-license) for their individual terms.
 
-![API](https://img.shields.io/badge/API-v0.9.2-blue)
+![API](https://img.shields.io/badge/API-v0.9.3-blue)
 ![Compatibility](https://img.shields.io/badge/Twilio--compatible-wire%20format-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![SDKs](https://img.shields.io/badge/SDKs-8-brightgreen)
@@ -37,7 +37,7 @@ Each row links to the official SDK source, and every install command selects a p
 | 🐍 **Python** | [voiceml-python-sdk](https://github.com/voicetel/voiceml-python-sdk) | `pip install voiceml` | `Client` + `AsyncClient`, Pydantic v2, httpx |
 | 🟦 **TypeScript / Node** | [voiceml-node-sdk](https://github.com/voicetel/voiceml-node-sdk) | `npm install @voicetel.com/voiceml` | ESM and CommonJS, async-only, `fetch`-based, zero runtime deps |
 | 🐹 **Go** | [voiceml-go-sdk](https://github.com/voicetel/voiceml-go-sdk) | `go get github.com/voicetel/voiceml-go-sdk` | `context.Context`, stdlib `net/http`, zero deps |
-| ☕ **Java** | [voiceml-java-sdk](https://github.com/voicetel/voiceml-java-sdk) | `com.voicetel:voiceml:0.9.3` | Java 11, `java.net.http`, Jackson, builders |
+| ☕ **Java** | [voiceml-java-sdk](https://github.com/voicetel/voiceml-java-sdk) | `com.voicetel:voiceml:0.9.4` | Java 11, `java.net.http`, Jackson, builders |
 | 🟪 **C# / .NET** | [voiceml-csharp-sdk](https://github.com/voicetel/voiceml-csharp-sdk) | `dotnet add package VoiceML` | .NET 8+, `async/await`, `System.Text.Json`, no runtime package dependencies |
 | 🐘 **PHP** | [voiceml-php-sdk](https://github.com/voicetel/voiceml-php-sdk) | `composer require voicetel/voiceml` | PHP 8.1+, Guzzle 7, typed enums, PSR-4 |
 | 💎 **Ruby** | [voiceml-ruby-sdk](https://github.com/voicetel/voiceml-ruby-sdk) | `gem install voiceml` | Ruby 3.1+, stdlib `Net::HTTP`, kwargs, zero gem deps |
@@ -47,24 +47,25 @@ The official .NET package is [`VoiceML` on nuget.org](https://www.nuget.org/pack
 
 ## 🏷️ Releases
 
-Release status checked **2026-10-19**: all eight SDK repositories have a **v0.9.3 GitHub Release** (pagination, retry-safety and spec-conformance fixes on top of v0.9.2), and v0.9.3 is published to PyPI, npm, the Go proxy, Maven Central, RubyGems, Packagist and NuGet. This catalogue's own latest GitHub Release is [v0.9.3](https://github.com/voicetel/voiceml-sdks/releases/tag/v0.9.3).
+Release status checked **2026-10-21**: all eight SDK repositories have a **v0.9.4 GitHub Release** (IncomingPhoneNumbers status callbacks + application binding, OutgoingCallerIds verification params — spec 0.9.3), and v0.9.4 is published to PyPI, npm, the Go proxy, Maven Central, RubyGems, Packagist and NuGet. This catalogue's own latest GitHub Release is [v0.9.4](https://github.com/voicetel/voiceml-sdks/releases/tag/v0.9.4).
 
 | Language | Latest release | All releases |
 |---|---|---|
-| 🐍 Python | [v0.9.3](https://github.com/voicetel/voiceml-python-sdk/releases/tag/v0.9.3) | [history](https://github.com/voicetel/voiceml-python-sdk/releases) |
-| 🟦 TypeScript / Node | [v0.9.3](https://github.com/voicetel/voiceml-node-sdk/releases/tag/v0.9.3) | [history](https://github.com/voicetel/voiceml-node-sdk/releases) |
-| 🐹 Go | [v0.9.3](https://github.com/voicetel/voiceml-go-sdk/releases/tag/v0.9.3) | [history](https://github.com/voicetel/voiceml-go-sdk/releases) |
-| ☕ Java | [v0.9.3](https://github.com/voicetel/voiceml-java-sdk/releases/tag/v0.9.3) | [history](https://github.com/voicetel/voiceml-java-sdk/releases) |
-| 🟪 C# / .NET | [v0.9.3](https://github.com/voicetel/voiceml-csharp-sdk/releases/tag/v0.9.3) | [history](https://github.com/voicetel/voiceml-csharp-sdk/releases) |
-| 🐘 PHP | [v0.9.3](https://github.com/voicetel/voiceml-php-sdk/releases/tag/v0.9.3) | [history](https://github.com/voicetel/voiceml-php-sdk/releases) |
-| 💎 Ruby | [v0.9.3](https://github.com/voicetel/voiceml-ruby-sdk/releases/tag/v0.9.3) | [history](https://github.com/voicetel/voiceml-ruby-sdk/releases) |
-| 🦅 Swift | [v0.9.3](https://github.com/voicetel/voiceml-swift/releases/tag/v0.9.3) | [history](https://github.com/voicetel/voiceml-swift/releases) |
+| 🐍 Python | [v0.9.4](https://github.com/voicetel/voiceml-python-sdk/releases/tag/v0.9.4) | [history](https://github.com/voicetel/voiceml-python-sdk/releases) |
+| 🟦 TypeScript / Node | [v0.9.4](https://github.com/voicetel/voiceml-node-sdk/releases/tag/v0.9.4) | [history](https://github.com/voicetel/voiceml-node-sdk/releases) |
+| 🐹 Go | [v0.9.4](https://github.com/voicetel/voiceml-go-sdk/releases/tag/v0.9.4) | [history](https://github.com/voicetel/voiceml-go-sdk/releases) |
+| ☕ Java | [v0.9.4](https://github.com/voicetel/voiceml-java-sdk/releases/tag/v0.9.4) | [history](https://github.com/voicetel/voiceml-java-sdk/releases) |
+| 🟪 C# / .NET | [v0.9.4](https://github.com/voicetel/voiceml-csharp-sdk/releases/tag/v0.9.4) | [history](https://github.com/voicetel/voiceml-csharp-sdk/releases) |
+| 🐘 PHP | [v0.9.4](https://github.com/voicetel/voiceml-php-sdk/releases/tag/v0.9.4) | [history](https://github.com/voicetel/voiceml-php-sdk/releases) |
+| 💎 Ruby | [v0.9.4](https://github.com/voicetel/voiceml-ruby-sdk/releases/tag/v0.9.4) | [history](https://github.com/voicetel/voiceml-ruby-sdk/releases) |
+| 🦅 Swift | [v0.9.4](https://github.com/voicetel/voiceml-swift/releases/tag/v0.9.4) | [history](https://github.com/voicetel/voiceml-swift/releases) |
 
 Release highlights:
 - **v0.7.x and earlier** — calls, conferences, queues, applications, recordings, incoming phone numbers, SMS and REST payment-session control; README consistency updates and model fixes.
 - **v0.8.x** — SIP domain, credential-list and IP access-control management, plus Routes v2 SIP-domain region settings.
 - **v0.9.1** — Conversations v1 (including service-scoped resources), Voice v1, Routes v2 phone-number region settings, and Assistants v1.
 - **v0.9.2** — Messaging Service management, Pricing v1/v2 lookups (including Trunking rates), and separate Conversations/Messaging product hosts with configurable overrides.
+- **v0.9.4** (2026-10-21) — spec 0.9.3: IncomingPhoneNumbers create/update accept `StatusCallback`/`StatusCallbackMethod`/`VoiceApplicationSid`, and OutgoingCallerIds create (caller-ID verification) accepts `CallDelay`/`Extension`/`StatusCallback`/`StatusCallbackMethod` — fields the server already honored but the SDKs could not send.
 - **v0.9.3** (2026-10-18) — correctness release: list iteration now follows the server's page links (the previous page-counter loop never terminated against the current API), POSTs are no longer replayed after timeouts or 5xx, per-call GETs the API retired are removed, credentials are kept out of default object dumps and storage redirects, and every SDK gained ~40 operations (333/333 spec coverage, enforced by committed contract tests) plus webhook signature validation. See each repository's release notes for endpoint-precise breaking changes.
 
 ## 🛠️ Tooling
@@ -261,7 +262,7 @@ Every SDK's README lists the per-language nuances.
 
 ## 🔢 Versioning
 
-- Latest **released SDK repository tags**: **v0.9.3** (published to PyPI, npm, the Go proxy, Maven Central, RubyGems, Packagist and NuGet). This catalogue's latest release is **v0.9.3**.
+- Latest **released SDK repository tags**: **v0.9.4** (published to PyPI, npm, the Go proxy, Maven Central, RubyGems, Packagist and NuGet). This catalogue's latest release is **v0.9.4**.
 - The eight language SDKs track the API spec version together at release time. The CLI has its own version line; collections and catalogue releases can lag.
 - A spec version alone does not establish operation coverage: the document can change before the next version cut. Match coverage claims to a dated spec snapshot and a passing contract test, and check Unreleased changes separately from published packages.
 - The public API reference is at [voicetel.com/docs/api/v0.9/voiceml/](https://voicetel.com/docs/api/v0.9/voiceml/). The path uses major.minor, so patch releases stay on `/v0.9/`.
