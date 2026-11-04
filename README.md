@@ -74,7 +74,7 @@ Release highlights:
 | Tool | Repo | Purpose |
 |---|---|---|
 | **CLI** | [voiceml-cli](https://github.com/voicetel/voiceml-cli) | Interactive REPL + `-x` one-shot commands for a subset of the API. Independent release line; latest GitHub Release is [v0.2.1](https://github.com/voicetel/voiceml-cli/releases/tag/v0.2.1), built against the v0.9.3 SDK. Note: `go install …@latest` still resolves the stale pre-rename `v0.6.6` tag; install the release binaries or pin `@v0.2.1` until a >v0.6.6 line with retractions lands. |
-| **Collections** | [voiceml-api-collections](https://github.com/voicetel/voiceml-api-collections) | Postman v2.1 + Bruno requests. The [v0.9.3 release](https://github.com/voicetel/voiceml-api-collections/releases/tag/v0.9.3) is regenerated for the current spec: 333 operations, per-product host variables, and spec-correct form bodies. |
+| **Collections** | [voiceml-api-collections](https://github.com/voicetel/voiceml-api-collections) | Postman v2.1 + Bruno requests. The [v0.9.4 release](https://github.com/voicetel/voiceml-api-collections/releases/tag/v0.9.4) is regenerated for the current spec: 333 operations, per-product host variables, and spec-correct form bodies. |
 
 ## ✨ What every SDK gives you
 
