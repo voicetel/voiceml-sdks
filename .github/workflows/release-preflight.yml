@@ -1,0 +1,31 @@
+name: SDK release preflight
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Candidate SDK version (major.minor.patch, without v)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  verify:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - name: Verify version files, main-branch CI, and unused tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.SDK_PREFLIGHT_READ_TOKEN || github.token }}
+          CANDIDATE: ${{ inputs.version }}
+        run: python3 scripts/check_release_candidates.py "$CANDIDATE"
