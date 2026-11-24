@@ -47,6 +47,10 @@ The official .NET package is [`VoiceML` on nuget.org](https://www.nuget.org/pack
 
 ## 🏷️ Releases
 
+For maintainers: run **SDK release preflight** in this repository before tagging a coordinated release. It checks the candidate version files and successful CI on the exact commits of all eight SDKs and rejects reused tags. Tag only the SHAs shown in the successful run, after confirming the SDK-to-spec mapping. After tagging, wait for each publish workflow and check the advertised registries and GitHub Releases before updating this catalogue.
+
+The **SDK Dependabot queue** reports eligible lockfile-only updates on weekdays. To enable squash merges, configure `SDK_QUEUE_TOKEN` with an expiring credential limited to these SDK repositories (Contents write, Pull requests read, Actions read; no admin or ruleset bypass), enforce strict required CI checks on `main`, and set the repository variable `SDK_QUEUE_MODE` to `merge`. Manifest changes, workflow changes, and PRs without successful CI and CodeQL stay under manual review. Keep catalogue `main` protected before attaching a write credential.
+
 Release status checked **2026-10-21**: all eight SDK repositories have a **v0.9.5 GitHub Release** (spec 0.9.4 — call TimeLimit, participant conference callbacks, recording PauseBehavior, Application SMS fields, scheduled Messages, transcription engine controls), and v0.9.5 is published to PyPI, npm, the Go proxy, Maven Central, RubyGems, Packagist and NuGet. This catalogue's own latest GitHub Release is [v0.9.5](https://github.com/voicetel/voiceml-sdks/releases/tag/v0.9.5).
 
 | Language | Latest release | All releases |

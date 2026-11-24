@@ -1,0 +1,38 @@
+name: SDK Dependabot queue
+
+on:
+  schedule:
+    - cron: '43 12 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sdk-dependabot-queue
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - name: Evaluate the queue and merge eligible lockfile updates if enabled
+        env:
+          SDK_QUEUE_TOKEN: ${{ secrets.SDK_QUEUE_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+          SDK_QUEUE_MODE: ${{ vars.SDK_QUEUE_MODE }}
+        run: |
+          if [[ "$SDK_QUEUE_MODE" == merge ]]; then
+            : "${SDK_QUEUE_TOKEN:?Configure a dedicated queue credential before enabling merge mode}"
+            GH_TOKEN="$SDK_QUEUE_TOKEN" python3 scripts/dependabot_queue.py --merge
+          else
+            python3 scripts/dependabot_queue.py
+          fi

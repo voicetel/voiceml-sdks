@@ -46,6 +46,8 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
+      - name: Test release workflow checks
+        run: python3 -m unittest discover -s scripts -p test_sdk_release_workflows.py
       - name: Verify advertised registry and release metadata
         env:
           GITHUB_TOKEN: ${{ github.token }}
